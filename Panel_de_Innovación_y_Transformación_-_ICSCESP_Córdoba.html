@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="charter">
+  <title>ICSCESP — Instituto de Capacitación, Supervisión, Control y Estadística para la Seguridad Privada | Córdoba</title>
+
+  <!-- Google Fonts: Libre Caslon Text + Inter + Geist Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces: Charter style warm cream paper */
+      --background: #f7f4ec;
+      --surface-container-low: #fffdf8;
+      --surface-container: #ece5d4;
+      --surface-container-high: #e3dac4;
+
+      /* Ink */
+      --on-surface: #1c1f26;
+      --on-surface-variant: #4f5360;
+
+      /* Rules & borders */
+      --outline: #b08d57;
+      --outline-variant: #d9cfb8;
+
+      /* Accents */
+      --primary: #14213d;
+      --on-primary: #f7f4ec;
+      --primary-container: #e3e6ee;
+      --on-primary-container: #14213d;
+      --secondary: #2d5a4a;
+      --on-secondary: #f7f4ec;
+      --tertiary: #8a6a35;
+      --on-tertiary: #fffdf8;
+
+      /* Semantics */
+      --positive: #2d5a4a;
+      --on-positive: #ffffff;
+      --warning: #b45309;
+      --on-warning: #ffffff;
+      --error: #9b2c2c;
+      --on-error: #f7f4ec;
+      --info: #1f4e5f;
+      --on-info: #ffffff;
+
+      /* Data series */
+      --data-1: #14213d;
+      --data-2: #8a6a35;
+      --data-3: #2d5a4a;
+      --data-4: #5b7aa0;
+      --data-5: #9b2c2c;
+      --data-context: #c2bba9;
+
+      /* Focus */
+      --focus: #14213d;
+
+      /* Fonts */
+      --font-headline: 'Libre Caslon Text', Georgia, serif;
+      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-label: 'Inter', system-ui, sans-serif;
+      --font-mono: 'Geist Mono', monospace;
+
+      /* Radii */
+      --rounded: 0.125rem;
+      --rounded-lg: 0.25rem;
+      --rounded-full: 0.25rem;
+
+      /* Style effects */
+      --brass-rule: 2px solid var(--outline);
+      --hairline: 1px solid var(--outline-variant);
+      --leaf-underline: 0 1px 0 var(--outline-variant);
+
+      /* Spacing Scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      /* Typographic Scale */
+      --display-size: clamp(2.2rem, 1.4rem + 3.2vw, 3.8rem);
+      --headline-size: clamp(1.65rem, 1.15rem + 1.8vw, 2.35rem);
+      --subhead-size: clamp(1.1rem, 0.95rem + 0.5vw, 1.35rem);
+      --body-size: clamp(0.95rem, 0.9rem + 0.18vw, 1.05rem);
+      --label-size: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+
+      /* Transitions */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Reset and Typography Defaults */
+    html, body {
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, .font-serif-headline {
+      font-family: var(--font-headline);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+    }
+
+    .font-mono-code {
+      font-family: var(--font-mono);
+    }
+
+    .tabular-numbers {
+      font-variant-numeric: tabular-nums lining-nums;
+    }
+
+    /* Style Charter Signature Treatments */
+    .title-band {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-bottom: 3px solid var(--outline);
+    }
+
+    .figure-card {
+      background-color: var(--surface-container-low);
+      border-top: var(--brass-rule);
+      border-left: var(--hairline);
+      border-right: var(--hairline);
+      border-bottom: var(--hairline);
+      box-shadow: 0 2px 8px rgba(20, 33, 61, 0.04);
+      border-radius: var(--rounded);
+    }
+
+    .brass-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background-color: var(--surface-container);
+      color: var(--tertiary);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+    }
+
+    .brass-badge.navy {
+      background-color: rgba(20, 33, 61, 0.08);
+      color: var(--primary);
+      border-color: rgba(20, 33, 61, 0.2);
+    }
+
+    .brass-badge.green {
+      background-color: rgba(45, 90, 74, 0.1);
+      color: var(--secondary);
+      border-color: rgba(45, 90, 74, 0.25);
+    }
+
+    .brass-badge.crimson {
+      background-color: rgba(155, 44, 44, 0.1);
+      color: var(--error);
+      border-color: rgba(155, 44, 44, 0.25);
+    }
+
+    /* Focus visible */
+    button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+      outline: 2px solid var(--outline);
+      outline-offset: 2px;
+    }
+
+    /* Interactive components styling */
+    .tab-btn {
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+    .tab-btn[aria-selected="true"] {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    /* Custom form elements */
+    .charter-select, .charter-input {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      color: var(--on-surface);
+      border-radius: var(--rounded);
+      padding: 0.5rem 0.75rem;
+      font-size: 0.9rem;
+      transition: border-color var(--dur-short) var(--ease-out);
+    }
+    .charter-select:focus, .charter-input:focus {
+      border-color: var(--outline);
+      outline: none;
+    }
+
+    /* Slider track custom */
+    input[type=range] {
+      accent-color: var(--primary);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP INSTITUTIONAL STRIP -->
+  <aside aria-label="Información institucional" class="w-full bg-[#0d1629] text-[#e3dac4] border-b border-[#b08d57]/40 px-4 py-1.5 text-xs">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 font-mono-code tracking-wide">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-[#b08d57]"></span>
+        <span class="font-semibold text-white">PROVINCIA DE CÓRDOBA</span>
+        <span class="text-[#b08d57]">|</span>
+        <span>CoPEC • Ley Nº 9.475</span>
+        <span class="text-[#b08d57]">|</span>
+        <span>Ministerio de Seguridad</span>
+      </div>
+      <div class="flex items-center gap-3 text-[11px] text-[#e3dac4]/90">
+        <span class="bg-[#14213d] px-2 py-0.5 border border-[#b08d57]/30">Ley Nº 10.954 (Arts. 14, 28, 31, 59, 60, 62)</span>
+        <span class="hidden md:inline">Ley Nº 10.571 • Ley Nº 9.236</span>
+        <span class="text-[#b08d57] font-semibold">REF: ICSCESP-2024-CBA</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- TITLE BAND: EXECUTIVE DOSSIER COVER -->
+  <header class="title-band px-4 sm:px-6 lg:px-8 py-10 lg:py-14 shadow-lg">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-4 border-b border-[#b08d57]/30">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded bg-[#b08d57]/20 border border-[#b08d57] flex items-center justify-center text-[#f7f4ec]">
+            <i data-lucide="shield-alert" class="w-7 h-7 text-[#b08d57]"></i>
+          </div>
+          <div>
+            <p class="text-xs font-mono-code uppercase tracking-widest text-[#b08d57] font-semibold">Órgano Rector y Normativo • Seguridad Pública y Privada</p>
+            <p class="text-sm text-[#f7f4ec]/80">Propuesta de Transformación Integral del Subsistema de Seguridad Privada</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="brass-badge navy bg-white/10 text-[#f7f4ec] border-[#b08d57]/50">Dependencia: CoPEC</span>
+          <span class="brass-badge green bg-[#2d5a4a]/40 text-[#f7f4ec] border-[#2d5a4a]">Cuentas Especiales Bancor (Art. 59)</span>
+          <span class="brass-badge bg-[#b08d57]/30 text-[#f7f4ec] border-[#b08d57]">Matriz Obligatoria de Riesgos</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+        <div class="lg:col-span-8">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl text-[#f7f4ec] font-serif-headline leading-tight mb-4">
+            Instituto de Capacitación, Supervisión, Control y Estadística para la Seguridad Privada
+            <span class="block text-2xl sm:text-3xl lg:text-4xl text-[#b08d57] mt-1 italic font-serif-headline font-normal">(ICSCESP)</span>
+          </h1>
+          <p class="text-base sm:text-lg text-[#f7f4ec]/85 max-w-3xl leading-relaxed">
+            Estructura rectora para la superación del modelo tradicional de vigiladores genéricos: categorización funcional por riesgos, fiscalización in situ, trazabilidad biométrica, homologación tecnológica y sustentabilidad financiera autónoma en la Provincia de Córdoba.
+          </p>
+          <div class="mt-6 flex flex-wrap items-center gap-4 text-xs font-mono-code text-[#f7f4ec]/70">
+            <div><span class="text-[#b08d57]">Autor de Proyecto:</span> Subcrio. Lic. Hugo Víctor Callejo</div>
+            <div><span class="text-[#b08d57]">•</span></div>
+            <div><span class="text-[#b08d57]">Marco Legal:</span> Ley 10.954, 10.571, 9.475, 9.236 y 24.059</div>
+            <div><span class="text-[#b08d57]">•</span></div>
+            <div><span class="text-[#b08d57]">Jurisdicción:</span> Córdoba Capital e Interior Provincial</div>
+          </div>
+        </div>
+
+        <!-- Quick Summary Snapshot Figures -->
+        <div class="lg:col-span-4 bg-[#0d1629]/90 border-t-2 border-[#b08d57] p-5 rounded text-[#f7f4ec]">
+          <h2 class="text-xs font-mono-code uppercase tracking-wider text-[#b08d57] mb-3 flex items-center justify-between">
+            <span>Diagnóstico del Sector en Córdoba</span>
+            <i data-lucide="activity" class="w-4 h-4 text-[#b08d57]"></i>
+          </h2>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <p class="text-2xl font-serif-headline text-[#f7f4ec] tabular-numbers">~180</p>
+              <p class="text-xs text-[#f7f4ec]/70 mt-0.5">Empresas prestadoras habilitadas</p>
+            </div>
+            <div>
+              <p class="text-2xl font-serif-headline text-[#f7f4ec] tabular-numbers">+14.500</p>
+              <p class="text-xs text-[#f7f4ec]/70 mt-0.5">Agentes en funciones operativas</p>
+            </div>
+            <div>
+              <p class="text-2xl font-serif-headline text-[#b08d57] tabular-numbers">5 Cat.</p>
+              <p class="text-xs text-[#f7f4ec]/70 mt-0.5">Niveles de riesgo y especialidad</p>
+            </div>
+            <div>
+              <p class="text-2xl font-serif-headline text-[#2d5a4a] tabular-numbers">100%</p>
+              <p class="text-xs text-[#f7f4ec]/70 mt-0.5">Exigencia de Apto Psicofísico</p>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-[#f7f4ec]/70 italic">
+            "No se habilita un agente para cualquier servicio: la acreditación debe responder al nivel de riesgo del objetivo protegido."
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STICKY INSTITUTIONAL NAVIGATION -->
+  <nav class="bg-[#ece5d4] border-b border-[#d9cfb8] sticky top-0 z-40 px-4 sm:px-6 shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between overflow-x-auto py-2.5 gap-2 scrollbar-none">
+      <div class="flex items-center gap-1 sm:gap-2 text-xs font-medium whitespace-nowrap">
+        <a href="#calidad" class="px-3 py-1.5 rounded hover:bg-[#fffdf8] text-[#1c1f26] border border-transparent hover:border-[#d9cfb8] transition-colors flex items-center gap-1.5">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-[#b08d57]"></i>
+          <span>1. Propuesta & Circuito</span>
+        </a>
+        <a href="#matriz-riesgo" class="px-3 py-1.5 rounded hover:bg-[#fffdf8] text-[#1c1f26] border border-transparent hover:border-[#d9cfb8] transition-colors flex items-center gap-1.5">
+          <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-[#b08d57]"></i>
+          <span>2. Matriz de Riesgo & Contingencias</span>
+        </a>
+        <a href="#direcciones" class="px-3 py-1.5 rounded hover:bg-[#fffdf8] text-[#1c1f26] border border-transparent hover:border-[#d9cfb8] transition-colors flex items-center gap-1.5">
+          <i data-lucide="building" class="w-3.5 h-3.5 text-[#b08d57]"></i>
+          <span>3. Las 6 Direcciones</span>
+        </a>
+        <a href="#especialidades" class="px-3 py-1.5 rounded hover:bg-[#fffdf8] text-[#1c1f26] border border-transparent hover:border-[#d9cfb8] transition-colors flex items-center gap-1.5">
+          <i data-lucide="badge-check" class="w-3.5 h-3.5 text-[#b08d57]"></i>
+          <span>4. Catálogo & Credencial Digital</span>
+        </a>
+        <a href="#financiamiento" class="px-3 py-1.5 rounded hover:bg-[#fffdf8] text-[#1c1f26] border border-transparent hover:border-[#d9cfb8] transition-colors flex items-center gap-1.5">
+          <i data-lucide="landmark" class="w-3.5 h-3.5 text-[#b08d57]"></i>
+          <span>5. Financiamiento (Art. 59)</span>
+        </a>
+        <a href="#hoja-ruta" class="px-3 py-1.5 rounded hover:bg-[#fffdf8] text-[#1c1f26] border border-transparent hover:border-[#d9cfb8] transition-colors flex items-center gap-1.5">
+          <i data-lucide="git-merge" class="w-3.5 h-3.5 text-[#b08d57]"></i>
+          <span>6. Hoja de Ruta (6 Etapas)</span>
+        </a>
+        <a href="#marco-legal" class="px-3 py-1.5 rounded hover:bg-[#fffdf8] text-[#1c1f26] border border-transparent hover:border-[#d9cfb8] transition-colors flex items-center gap-1.5">
+          <i data-lucide="scale" class="w-3.5 h-3.5 text-[#b08d57]"></i>
+          <span>7. Marco Normativo</span>
+        </a>
+      </div>
+      <div class="hidden xl:flex items-center gap-2 pl-4 border-l border-[#d9cfb8]">
+        <button onclick="window.print()" class="px-2.5 py-1 text-xs bg-[#fffdf8] border border-[#b08d57] text-[#14213d] rounded hover:bg-[#14213d] hover:text-white transition-colors flex items-center gap-1">
+          <i data-lucide="printer" class="w-3 h-3"></i>
+          <span>Imprimir Informe</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN BODY CONTENT -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+    <!-- ========================================== -->
+    <!-- SECTION 1: PARADIGMA & CIRCUITO DE CALIDAD -->
+    <!-- ========================================== -->
+    <section id="calidad" class="space-y-8">
+      <div class="border-b border-[#b08d57] pb-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <span class="brass-badge navy">Eje Estratégico I</span>
+            <h2 class="text-2xl sm:text-3xl text-[#14213d] font-serif-headline mt-1">El Circuito de Calidad y la Transformación del Paradigma</h2>
+          </div>
+          <span class="text-xs font-mono-code text-[#4f5360]">Arts. 14, 28, 29 y 31 — Ley Provincial Nº 10.954</span>
+        </div>
+      </div>
+
+      <!-- Before vs After Paradigm Shift -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-5 bg-[#ece5d4]/60 border-l-4 border-[#9b2c2c] rounded">
+          <div class="flex items-center gap-2 text-[#9b2c2c] font-semibold text-sm mb-2">
+            <i data-lucide="x-circle" class="w-5 h-5"></i>
+            <span>Paradigma Tradicional Agotado (Disperso y Genérico)</span>
+          </div>
+          <p class="text-sm text-[#4f5360] leading-relaxed mb-3">
+            El vigilador privado realiza un curso único elemental y queda habilitado formalmente para cualquier destino: un hospital, una fábrica automotriz, una discoteca o un predio rural, sin importar la naturaleza de las amenazas ni las capacidades de respuesta exigibles.
+          </p>
+          <ul class="text-xs space-y-1.5 text-[#1c1f26]">
+            <li class="flex items-center gap-2">• Cursos teóricos estáticos sin homologación técnica de competencias.</li>
+            <li class="flex items-center gap-2">• Ausencia de matrices de evaluación de riesgo previas a la contratación.</li>
+            <li class="flex items-center gap-2">• Empresas reducidas a meras intermediarias de mano de obra de guardia.</li>
+            <li class="flex items-center gap-2">• Desconexión con el sistema de emergencias y seguridad pública provincial.</li>
+          </ul>
+        </div>
+
+        <div class="p-5 bg-[#fffdf8] border-l-4 border-[#2d5a4a] border-y border-r border-[#d9cfb8] rounded shadow-sm">
+          <div class="flex items-center gap-2 text-[#2d5a4a] font-semibold text-sm mb-2">
+            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+            <span>Nuevo Paradigma ICSCESP (Sistema Profesional Homologado)</span>
+          </div>
+          <p class="text-sm text-[#4f5360] leading-relaxed mb-3">
+            El servicio de seguridad privada se organiza como un sistema de protección integral. Nadie es asignado sin evaluar el riesgo del objetivo, y cada agente debe acreditar especialidad certificada, apto psicofísico anual y tecnología verificada operativamente.
+          </p>
+          <ul class="text-xs space-y-1.5 text-[#1c1f26]">
+            <li class="flex items-center gap-2">• <strong>5 Categorías Funcionales:</strong> Del alto riesgo de caudales a eventos masivos.</li>
+            <li class="flex items-center gap-2">• <strong>Planes de Contingencia Obligatorios:</strong> Inundación, incendio y antrópicos.</li>
+            <li class="flex items-center gap-2">• <strong>Trilogía de Certificación:</strong> Agente habilitado + Empresa apta + Tecnología probada.</li>
+            <li class="flex items-center gap-2">• <strong>Articulación con CoPEC y Policía de Córdoba:</strong> Complementariedad activa.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- The 5-Phase Quality Loop Interactive Stepper -->
+      <div class="figure-card p-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+          <div>
+            <h3 class="text-xl text-[#14213d] font-serif-headline">El Circuito Permanente de Calidad de la Seguridad Privada</h3>
+            <p class="text-xs text-[#4f5360] mt-0.5">Haga clic en cualquiera de las 5 fases para inspeccionar los requerimientos técnico-legales y el flujo de fiscalización.</p>
+          </div>
+          <span class="brass-badge">Ciclo de Retroalimentación Continua</span>
+        </div>
+
+        <!-- 5 Steps Horizontal Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 border-b border-[#d9cfb8] pb-4 mb-6" id="circuit-buttons" role="tablist" aria-label="Fases del Circuito de Calidad">
+          <button type="button" onclick="selectCircuitPhase(1)" id="circuit-btn-1" role="tab" aria-selected="true" aria-controls="circuit-panel" class="tab-btn p-3 text-left rounded border border-[#14213d] bg-[#14213d] text-white">
+            <span class="block text-[10px] font-mono-code text-[#b08d57] font-semibold">FASE 01</span>
+            <span class="block text-sm font-semibold mt-0.5">Identificar el Riesgo</span>
+            <span class="block text-[11px] opacity-80 mt-1">Diagnóstico previo del objetivo</span>
+          </button>
+          <button type="button" onclick="selectCircuitPhase(2)" id="circuit-btn-2" role="tab" aria-selected="false" aria-controls="circuit-panel" class="tab-btn p-3 text-left rounded border border-[#d9cfb8] bg-[#fffdf8] text-[#1c1f26] hover:bg-[#ece5d4]">
+            <span class="block text-[10px] font-mono-code text-[#b08d57] font-semibold">FASE 02</span>
+            <span class="block text-sm font-semibold mt-0.5">Definir Especialidad</span>
+            <span class="block text-[11px] text-[#4f5360] mt-1">Perfil y competencias exigibles</span>
+          </button>
+          <button type="button" onclick="selectCircuitPhase(3)" id="circuit-btn-3" role="tab" aria-selected="false" aria-controls="circuit-panel" class="tab-btn p-3 text-left rounded border border-[#d9cfb8] bg-[#fffdf8] text-[#1c1f26] hover:bg-[#ece5d4]">
+            <span class="block text-[10px] font-mono-code text-[#b08d57] font-semibold">FASE 03</span>
+            <span class="block text-sm font-semibold mt-0.5">Certificar Capacidad</span>
+            <span class="block text-[11px] text-[#4f5360] mt-1">Trilogía Agente-Empresa-Tech</span>
+          </button>
+          <button type="button" onclick="selectCircuitPhase(4)" id="circuit-btn-4" role="tab" aria-selected="false" aria-controls="circuit-panel" class="tab-btn p-3 text-left rounded border border-[#d9cfb8] bg-[#fffdf8] text-[#1c1f26] hover:bg-[#ece5d4]">
+            <span class="block text-[10px] font-mono-code text-[#b08d57] font-semibold">FASE 04</span>
+            <span class="block text-sm font-semibold mt-0.5">Supervisar In Situ</span>
+            <span class="block text-[11px] text-[#4f5360] mt-1">Auditoría operativa y actas</span>
+          </button>
+          <button type="button" onclick="selectCircuitPhase(5)" id="circuit-btn-5" role="tab" aria-selected="false" aria-controls="circuit-panel" class="tab-btn p-3 text-left rounded border border-[#d9cfb8] bg-[#fffdf8] text-[#1c1f26] hover:bg-[#ece5d4]">
+            <span class="block text-[10px] font-mono-code text-[#b08d57] font-semibold">FASE 05</span>
+            <span class="block text-sm font-semibold mt-0.5">Medir y Mejorar</span>
+            <span class="block text-[11px] text-[#4f5360] mt-1">Observatorio y estadísticas</span>
+          </button>
+        </div>
+
+        <!-- Dynamic Content Card for Selected Phase -->
+        <div id="circuit-detail-container" role="tabpanel" id="circuit-panel" aria-labelledby="circuit-btn-1" class="bg-[#faf9f5] border border-[#d9cfb8] p-6 rounded">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 2: MATRIZ DE RIESGOS & PLANES DE CONTINGENCIA OBLIGATORIOS        -->
+    <!-- ========================================================================= -->
+    <section id="matriz-riesgo" class="space-y-8">
+      <div class="border-b border-[#b08d57] pb-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <span class="brass-badge crimson">Herramienta Técnica Obligatoria</span>
+            <h2 class="text-2xl sm:text-3xl text-[#14213d] font-serif-headline mt-1">Matriz de Evaluación de Riesgos y Simulador de Planes de Contingencia</h2>
+          </div>
+          <span class="text-xs font-mono-code text-[#4f5360]">Análisis Previo Mandatorio por Objetivo</span>
+        </div>
+      </div>
+
+      <!-- Explanatory Dossier for the 3 Major Hazards in Córdoba -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Hazard 1: Inundaciones -->
+        <div class="figure-card p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="brass-badge navy">Contingencia Hidrológica</span>
+            <i data-lucide="waves" class="w-5 h-5 text-[#1f4e5f]"></i>
+          </div>
+          <h4 class="text-lg text-[#14213d] font-serif-headline font-bold">1. Inundaciones y Crecientes Serranas</h4>
+          <p class="text-xs text-[#4f5360] mt-1 leading-relaxed">
+            Fenómenos recurrentes en las cuencas de Punilla, Calamuchita, Sierras Chicas y colapsos de drenaje pluvial en el ejido urbano de Córdoba Capital.
+          </p>
+          <div class="mt-3 pt-3 border-t border-[#d9cfb8] text-xs space-y-1.5 text-[#1c1f26]">
+            <div><strong>Protocolo Mandatorio:</strong> Identificación de cota de inundación, corte selectivo de energía, rutas de repliegue hacia cotas altas.</div>
+            <div><strong>Articulación:</strong> Enlace radial con Defensa Civil provincial y DUAR Policía de Córdoba.</div>
+          </div>
+        </div>
+
+        <!-- Hazard 2: Incendios -->
+        <div class="figure-card p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="brass-badge crimson">Contingencia Ígnea</span>
+            <i data-lucide="flame" class="w-5 h-5 text-[#9b2c2c]"></i>
+          </div>
+          <h4 class="text-lg text-[#14213d] font-serif-headline font-bold">2. Incendios (Forestales, Industriales y Urbanos)</h4>
+          <p class="text-xs text-[#4f5360] mt-1 leading-relaxed">
+            Riesgo crítico en zonas de interfaz urbano-forestal en serranías, polígonos industriales y recintos con alta densidad de ocupación humana (boliches/espectáculos).
+          </p>
+          <div class="mt-3 pt-3 border-t border-[#d9cfb8] text-xs space-y-1.5 text-[#1c1f26]">
+            <div><strong>Protocolo Mandatorio:</strong> Verificación de salidas de emergencia sin cerrojos, extintores vigentes, hidrantes y despeje de cortafuegos.</div>
+            <div><strong>Capacitación:</strong> Brigadistas de primer ataque con certificación bomberil homologada.</div>
+          </div>
+        </div>
+
+        <!-- Hazard 3: Antrópicos -->
+        <div class="figure-card p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="brass-badge">Contingencia Antrópica</span>
+            <i data-lucide="users" class="w-5 h-5 text-[#b08d57]"></i>
+          </div>
+          <h4 class="text-lg text-[#14213d] font-serif-headline font-bold">3. Contingencias Antrópicas Críticas</h4>
+          <p class="text-xs text-[#4f5360] mt-1 leading-relaxed">
+            Estampidas de multitudes en boliches o recitales, agresiones armadas tipo golpe comando, motines perimetrales o situaciones de pánico colectivo.
+          </p>
+          <div class="mt-3 pt-3 border-t border-[#d9cfb8] text-xs space-y-1.5 text-[#1c1f26]">
+            <div><strong>Protocolo Mandatorio:</strong> Control estricto de aforo biométrico, descompresión por sectores, alerta inmediata al 911 policial.</div>
+            <div><strong>Principio Rector:</strong> Prohibición absoluta de armas de fuego (Art. 31 Ley 9.236); técnicas de mediación y contención física.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE CALCULATOR & CONTINGENCY SIMULATOR -->
+      <div class="figure-card p-6 lg:p-8">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-[#d9cfb8]">
+          <div>
+            <h3 class="text-xl sm:text-2xl text-[#14213d] font-serif-headline">Simulador Técnico de Evaluación de Riesgo y Planes Mandatorios</h3>
+            <p class="text-xs sm:text-sm text-[#4f5360] mt-0.5">Seleccione un escenario preconfigurado de Córdoba o ajuste las variables operativas para obtener el diagnóstico reglamentario en tiempo real.</p>
+          </div>
+          <div class="flex flex-wrap gap-2" id="risk-presets">
+            <button type="button" onclick="loadRiskPreset('boliche')" class="px-2.5 py-1 text-xs bg-[#ece5d4] hover:bg-[#14213d] hover:text-white border border-[#b08d57] rounded transition-colors">
+              Discoteca / Recinto Masivo
+            </button>
+            <button type="button" onclick="loadRiskPreset('industrial')" class="px-2.5 py-1 text-xs bg-[#ece5d4] hover:bg-[#14213d] hover:text-white border border-[#b08d57] rounded transition-colors">
+              Complejo Químico / Fabril
+            </button>
+            <button type="button" onclick="loadRiskPreset('serrano')" class="px-2.5 py-1 text-xs bg-[#ece5d4] hover:bg-[#14213d] hover:text-white border border-[#b08d57] rounded transition-colors">
+              Predio Serrano / Ribereño
+            </button>
+            <button type="button" onclick="loadRiskPreset('caudales')" class="px-2.5 py-1 text-xs bg-[#ece5d4] hover:bg-[#14213d] hover:text-white border border-[#b08d57] rounded transition-colors">
+              Transporte de Caudales
+            </button>
+            <button type="button" onclick="loadRiskPreset('sanitario')" class="px-2.5 py-1 text-xs bg-[#ece5d4] hover:bg-[#14213d] hover:text-white border border-[#b08d57] rounded transition-colors">
+              Polo Sanitario / Hospital
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <!-- Left Column: Sliders and Inputs -->
+          <div class="lg:col-span-6 space-y-5">
+            <!-- Objective selector -->
+            <div>
+              <label for="risk-obj-type" class="block text-xs font-semibold uppercase tracking-wider text-[#14213d] mb-1">
+                1. Naturaleza y Tipología del Objetivo Protegido
+              </label>
+              <select id="risk-obj-type" onchange="calculateRiskMatrix()" class="w-full charter-select text-sm font-medium">
+                <option value="caudales">Transporte y Custodia de Caudales / Valores Críticos (Cat. I)</option>
+                <option value="sanitario">Establecimiento Hospitalario / Polo Sanitario Provincial (Cat. II)</option>
+                <option value="evento" selected>Discoteca / Espectáculo Masivo / Boliche Bailable (Cat. III)</option>
+                <option value="industrial">Planta Industrial / Centro Logístico de Carga (Cat. IV)</option>
+                <option value="perimetral">Predio Serrano / Urbanización / Perímetro Ribereño (Cat. V)</option>
+                <option value="educativo">Centro Educativo / Universidad / Edificio Corporativo (Cat. II)</option>
+              </select>
+              <p class="text-[11px] text-[#4f5360] mt-1">La tipología asigna la línea de base de responsabilidad operativa.</p>
+            </div>
+
+            <!-- Slider 1: Exposición / Afluencia de Personas -->
+            <div class="bg-[#faf9f5] p-3.5 rounded border border-[#d9cfb8]">
+              <div class="flex items-center justify-between text-xs mb-1">
+                <label for="risk-exposure" class="font-semibold text-[#14213d]">2. Nivel de Afluencia / Exposición Humana</label>
+                <span id="risk-exposure-val" class="font-mono-code font-bold text-[#14213d]">Nivel 4 — Muy Alta (>2.500 personas)</span>
+              </div>
+              <input type="range" id="risk-exposure" min="1" max="5" value="4" oninput="updateRiskSliders(); calculateRiskMatrix();" class="w-full h-2 bg-[#d9cfb8] rounded appearance-none cursor-pointer">
+              <div class="flex justify-between text-[10px] text-[#4f5360] font-mono-code mt-1">
+                <span>1: Mínima (<50)</span>
+                <span>3: Media (300-1000)</span>
+                <span>5: Masiva (>5000)</span>
+              </div>
+            </div>
+
+            <!-- Slider 2: Vulnerabilidad Geográfica / Ambiental -->
+            <div class="bg-[#faf9f5] p-3.5 rounded border border-[#d9cfb8]">
+              <div class="flex items-center justify-between text-xs mb-1">
+                <label for="risk-vulnerability" class="font-semibold text-[#14213d]">3. Exposición a Amenazas Naturales / Estructurales</label>
+                <span id="risk-vuln-val" class="font-mono-code font-bold text-[#b08d57]">Alta (Riesgo Ígneo / Crecientes)</span>
+              </div>
+              <input type="range" id="risk-vulnerability" min="1" max="4" value="3" oninput="updateRiskSliders(); calculateRiskMatrix();" class="w-full h-2 bg-[#d9cfb8] rounded appearance-none cursor-pointer">
+              <div class="flex justify-between text-[10px] text-[#4f5360] font-mono-code mt-1">
+                <span>1: Baja / Ejido Urbano Seguro</span>
+                <span>2: Media</span>
+                <span>3: Alta (Serrana/Fuego)</span>
+                <span>4: Extrema</span>
+              </div>
+            </div>
+
+            <!-- Slider 3: Medidas y Capacidad Instalada -->
+            <div class="bg-[#faf9f5] p-3.5 rounded border border-[#d9cfb8]">
+              <div class="flex items-center justify-between text-xs mb-1">
+                <label for="risk-readiness" class="font-semibold text-[#14213d]">4. Capacidad de Mitigación y Medidas Existentes</label>
+                <span id="risk-readiness-val" class="font-mono-code font-bold text-[#2d5a4a]">Media (Alarmas + Brigada básica)</span>
+              </div>
+              <input type="range" id="risk-readiness" min="1" max="3" value="2" oninput="updateRiskSliders(); calculateRiskMatrix();" class="w-full h-2 bg-[#d9cfb8] rounded appearance-none cursor-pointer">
+              <div class="flex justify-between text-[10px] text-[#4f5360] font-mono-code mt-1">
+                <span>1: Básica / Mínima</span>
+                <span>2: Estándar Homologada</span>
+                <span>3: Avanzada / Redundante</span>
+              </div>
+            </div>
+
+            <!-- Hazard presence toggles -->
+            <div class="pt-2">
+              <p class="text-xs font-semibold text-[#14213d] mb-2 uppercase tracking-wider">Factores Agravantes Verificados:</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                <label class="flex items-center gap-2 p-2 bg-[#faf9f5] border border-[#d9cfb8] rounded cursor-pointer">
+                  <input type="checkbox" id="chk-flood" checked onchange="calculateRiskMatrix()" class="rounded text-[#14213d]">
+                  <span>Proximidad a Río / Vía Hídrica</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 bg-[#faf9f5] border border-[#d9cfb8] rounded cursor-pointer">
+                  <input type="checkbox" id="chk-fire" checked onchange="calculateRiskMatrix()" class="rounded text-[#14213d]">
+                  <span>Carga de Fuego / Interfaz Serrana</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 bg-[#faf9f5] border border-[#d9cfb8] rounded cursor-pointer">
+                  <input type="checkbox" id="chk-crowd" checked onchange="calculateRiskMatrix()" class="rounded text-[#14213d]">
+                  <span>Aglomeración / Concurrencia Nocturna</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Results & Mandatory Contingency Plans Generated -->
+          <div class="lg:col-span-6 bg-[#faf9f5] border border-[#d9cfb8] p-5 rounded space-y-4">
+            <!-- Score Gauge and Category Header -->
+            <div class="flex flex-wrap items-center justify-between gap-3 p-4 bg-[#fffdf8] border border-[#d9cfb8] rounded">
+              <div>
+                <span class="text-[11px] font-mono-code uppercase tracking-wider text-[#4f5360]">Índice Compuesto de Riesgo (ICR)</span>
+                <div class="flex items-baseline gap-2 mt-0.5">
+                  <span id="matrix-score" class="text-4xl font-serif-headline font-bold text-[#14213d] tabular-numbers">78</span>
+                  <span class="text-xs font-mono-code text-[#4f5360]">/ 100 pts</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="text-[11px] font-mono-code uppercase tracking-wider text-[#4f5360]">Clasificación de Riesgo</span>
+                <div id="matrix-level-badge" class="mt-1 inline-block px-3 py-1 rounded text-xs font-bold tracking-wider uppercase bg-[#9b2c2c] text-white">
+                  Riesgo Crítico / Categoría III
+                </div>
+              </div>
+            </div>
+
+            <!-- Risk meter bar -->
+            <div>
+              <div class="w-full bg-[#e3dac4] h-2.5 rounded-full overflow-hidden">
+                <div id="risk-meter-bar" class="bg-[#9b2c2c] h-full transition-all duration-300" style="width: 78%;"></div>
+              </div>
+              <div class="flex justify-between text-[10px] font-mono-code text-[#4f5360] mt-1">
+                <span>0-25: Bajo</span>
+                <span>26-50: Moderado</span>
+                <span>51-75: Alto</span>
+                <span>76-100: Crítico</span>
+              </div>
+            </div>
+
+            <!-- Required Mandatory Contingency Plans -->
+            <div>
+              <h4 class="text-xs font-semibold uppercase tracking-wider text-[#14213d] flex items-center justify-between mb-2">
+                <span>Planes de Contingencia Exigibles por Ley 10.954:</span>
+                <span class="text-[11px] font-mono-code text-[#b08d57] font-normal">Revisión Obligatoria ICSCESP</span>
+              </h4>
+              <div id="required-plans-list" class="space-y-2 text-xs">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Mandatory Specialization and Personnel Requirements -->
+            <div class="p-3.5 bg-[#fffdf8] border-l-4 border-[#b08d57] border-y border-r border-[#d9cfb8] rounded text-xs space-y-1.5">
+              <p class="font-semibold text-[#14213d] flex items-center gap-1.5">
+                <i data-lucide="shield-check" class="w-4 h-4 text-[#b08d57]"></i>
+                <span id="required-cat-title">Especialidad Requerida: Categoría III — Eventos Masivos</span>
+              </p>
+              <p class="text-[#4f5360]" id="required-cat-desc">
+                Requiere habilitación en Manejo de Multitudes, Control de Admisión (sin armas), Técnicas de Desescalada y Evacuación Rápida. Apto Psicofísico de renovación anual obligatoria.
+              </p>
+              <div class="pt-2 border-t border-[#d9cfb8] flex flex-wrap gap-2 text-[11px] font-mono-code">
+                <span class="px-2 py-0.5 bg-[#ece5d4] text-[#14213d] rounded">CCTV Térmico Homologado</span>
+                <span class="px-2 py-0.5 bg-[#ece5d4] text-[#14213d] rounded">Radioenlace Cifrado</span>
+                <span class="px-2 py-0.5 bg-[#ece5d4] text-[#14213d] rounded">Art. 31: Sin Armas</span>
+              </div>
+            </div>
+
+            <!-- Botón para Emitir Dictamen Técnico Preliminar -->
+            <div class="pt-1">
+              <button type="button" onclick="generateTechnicalOpinion()" class="w-full py-2.5 px-4 bg-[#14213d] hover:bg-[#b08d57] text-white hover:text-[#14213d] rounded border border-[#b08d57] text-xs font-semibold tracking-wide transition-colors flex items-center justify-center gap-2 shadow-sm">
+                <i data-lucide="file-check" class="w-4 h-4 text-[#b08d57]"></i>
+                <span>Generar Dictamen Técnico Oficial Preliminar (Acta ICSCESP)</span>
+              </button>
+            </div>
+
+            <!-- Contenedor del Dictamen Técnico (Desplegable) -->
+            <div id="dictamen-output-box" class="hidden p-4 bg-[#fffdf8] border-2 border-[#14213d] rounded text-xs space-y-3">
+              <div class="flex items-center justify-between border-b border-[#d9cfb8] pb-2">
+                <div>
+                  <span class="text-[9px] font-mono-code text-[#b08d57] font-bold uppercase block">Gobierno de Córdoba • CoPEC • ICSCESP</span>
+                  <span class="font-bold text-[#14213d] text-sm">Dictamen Técnico Preliminar Nº <span id="dict-ref" class="font-mono-code">DICT-2024-CBA-0412</span></span>
+                </div>
+                <button type="button" onclick="closeTechnicalOpinion()" class="text-[#4f5360] hover:text-[#9b2c2c] text-xs font-bold px-2 py-0.5 bg-[#ece5d4] rounded">Cerrar</button>
+              </div>
+
+              <div class="space-y-1.5 text-[11px] text-[#1c1f26]">
+                <p><strong>Objetivo Analizado:</strong> <span id="dict-obj-name" class="font-semibold">Discoteca / Recinto Masivo</span></p>
+                <p><strong>Índice Compuesto de Riesgo (ICR):</strong> <span id="dict-icr-val" class="font-mono-code font-bold text-[#9b2c2c]">78 pts (Riesgo Crítico)</span></p>
+                <p><strong>Categoría Exigible de Habilitación:</strong> <span id="dict-cat-val" class="font-semibold text-[#14213d]">Cat. III — Eventos Masivos</span></p>
+                <p><strong>Planes de Contingencia Vinculantes:</strong> <span id="dict-plans-val" class="text-[#4f5360]">Plan Hidrológico, Plan contra Fuego, Protocolo Antiestampidas</span></p>
+                <div class="p-2.5 bg-[#9b2c2c]/10 text-[#9b2c2c] rounded border border-[#9b2c2c]/20 text-[10px] leading-relaxed">
+                  <strong>Cláusula Legal Taxativa (Art. 31 Ley 9.236):</strong> "QUEDA EXPRESAMENTE PROHIBIDO PARA LOS PRESTADORES EL USO DE CUALQUIER TIPO DE ARMAS". Las credenciales deben portar la leyenda expresa <em>Sin autorización para el uso de armas</em>. Renovación de apto psicofísico anual (Art. 18 Ley 9.236).
+                </div>
+              </div>
+
+              <div class="pt-2 border-t border-[#d9cfb8] flex flex-wrap items-center justify-between gap-2">
+                <span class="text-[10px] font-mono-code text-[#4f5360]">Ref: Subcrio. Lic. Hugo Víctor Callejo • Exp. CoPEC Nº 10.954/24</span>
+                <button type="button" onclick="copyTechnicalOpinion()" id="btn-copy-dictamen" class="px-3 py-1 bg-[#2d5a4a] text-white rounded text-[11px] font-medium hover:bg-[#14213d] transition-colors flex items-center gap-1.5">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                  <span id="copy-btn-text">Copiar Dictamen Oficial</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 3: ESTRUCTURA ORGÁNICA — LAS 6 DIRECCIONES RECTORAS               -->
+    <!-- ========================================================================= -->
+    <section id="direcciones" class="space-y-8">
+      <div class="border-b border-[#b08d57] pb-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <span class="brass-badge navy">Estructura Institucional Orgánica</span>
+            <h2 class="text-2xl sm:text-3xl text-[#14213d] font-serif-headline mt-1">Las 6 Direcciones del ICSCESP</h2>
+          </div>
+          <span class="text-xs font-mono-code text-[#4f5360]">Dependencia Estratégica: CoPEC (Art. 14 y 62 Ley 10.954)</span>
+        </div>
+      </div>
+
+      <!-- Institutional Hierarchy Schematic -->
+      <div class="bg-[#14213d] text-[#f7f4ec] p-6 rounded border-b-2 border-[#b08d57] shadow-sm">
+        <div class="text-center max-w-2xl mx-auto mb-6">
+          <span class="brass-badge bg-white/10 text-[#f7f4ec] border-[#b08d57]/40">Esquema Rector de Gobernanza</span>
+          <h3 class="text-xl sm:text-2xl font-serif-headline text-white mt-1">Cadena Orgánica y Articulación Gubernamental</h3>
+          <p class="text-xs text-[#f7f4ec]/80 mt-1">El Instituto se ubica en el marco del CoPEC (Ley 9.475) y articula operativamente con el Ministerio de Seguridad (Autoridad de Aplicación Ley 10.571).</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-xs">
+          <div class="p-4 bg-white/5 border border-[#b08d57]/30 rounded">
+            <p class="font-mono-code text-[#b08d57] font-semibold text-[10px] uppercase">Órgano de Planificación</p>
+            <p class="text-sm font-serif-headline font-bold text-white mt-0.5">CoPEC (Ley 9.475 / Art. 14 Ley 10.954)</p>
+            <p class="text-[11px] text-[#f7f4ec]/70 mt-1">Planificación estratégica provincial, políticas de seguridad y convivencia ciudadana.</p>
+          </div>
+          <div class="p-4 bg-[#b08d57]/20 border-2 border-[#b08d57] rounded">
+            <p class="font-mono-code text-white font-semibold text-[10px] uppercase">Rectoría Ejecutiva y Técnica</p>
+            <p class="text-base font-serif-headline font-bold text-white mt-0.5">ICSCESP (Instituto Autónomo)</p>
+            <p class="text-[11px] text-[#f7f4ec]/90 mt-1">Capacitación, clasificación, ética, control in situ, homologación técnica y estadística.</p>
+          </div>
+          <div class="p-4 bg-white/5 border border-[#b08d57]/30 rounded">
+            <p class="font-mono-code text-[#b08d57] font-semibold text-[10px] uppercase">Autoridad de Aplicación</p>
+            <p class="text-sm font-serif-headline font-bold text-white mt-0.5">Ministerio de Seguridad de Córdoba</p>
+            <p class="text-[11px] text-[#f7f4ec]/70 mt-1">Poder de policía, sustanciación legal, régimen sancionatorio y Cuentas Especiales Bancor.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- The 6 Directorates Interactive Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Dir 1: Formación -->
+        <div id="dir-card-1" onclick="inspectDirectorate(1)" class="figure-card p-5 flex flex-col justify-between cursor-pointer hover:border-[#14213d] transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="brass-badge navy">01. Formación</span>
+              <i data-lucide="graduation-cap" class="w-5 h-5 text-[#14213d]"></i>
+            </div>
+            <h4 class="text-lg font-serif-headline text-[#14213d] font-bold">Dirección de Formación y Profesionalización</h4>
+            <p class="text-xs text-[#4f5360] mt-1.5 leading-relaxed">
+              Diseño de mallas curriculares, homologación de academias privadas y convenios con universidades reconocidas por el Ministerio de Educación.
+            </p>
+            <div class="mt-3 pt-3 border-t border-[#d9cfb8] space-y-1.5 text-xs text-[#1c1f26]">
+              <div><strong>Apto Psicofísico:</strong> Control ineludible anual (vigiladores/escoltas) y bienal (directores técnicos) según Art. 18 Ley 9.236.</div>
+              <div><strong>Idoneidad Docente:</strong> Acta de Constancia firmada por Jefe de Dependencia (ad-honorem o rentada, sin burocracia de CV extensos).</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#d9cfb8] flex justify-between items-center text-[11px] font-mono-code text-[#b08d57]">
+            <span>Click para ver Expediente Orgánico</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+
+        <!-- Dir 2: Clasificación -->
+        <div id="dir-card-2" onclick="inspectDirectorate(2)" class="figure-card p-5 flex flex-col justify-between cursor-pointer hover:border-[#14213d] transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="brass-badge">02. Clasificación</span>
+              <i data-lucide="layers" class="w-5 h-5 text-[#b08d57]"></i>
+            </div>
+            <h4 class="text-lg font-serif-headline text-[#14213d] font-bold">Dirección de Clasificación y Especialización</h4>
+            <p class="text-xs text-[#4f5360] mt-1.5 leading-relaxed">
+              Estructuración técnica de servicios por 4 variables: Naturaleza del objetivo, Nivel de exposición, Complejidad operativa y Responsabilidad asignada.
+            </p>
+            <div class="mt-3 pt-3 border-t border-[#d9cfb8] space-y-1.5 text-xs text-[#1c1f26]">
+              <div><strong>Catálogo de Puestos:</strong> Categorías I a V con competencias obligatorias por rol funcional.</div>
+              <div><strong>Fin del Pase Automático:</strong> El agente solo puede prestar servicios para las especialidades acreditadas en su credencial.</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#d9cfb8] flex justify-between items-center text-[11px] font-mono-code text-[#b08d57]">
+            <span>Click para ver Expediente Orgánico</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+
+        <!-- Dir 3: Ética -->
+        <div id="dir-card-3" onclick="inspectDirectorate(3)" class="figure-card p-5 flex flex-col justify-between cursor-pointer hover:border-[#14213d] transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="brass-badge green">03. Ética y Conducta</span>
+              <i data-lucide="shield-alert" class="w-5 h-5 text-[#2d5a4a]"></i>
+            </div>
+            <h4 class="text-lg font-serif-headline text-[#14213d] font-bold">Dirección de Ética y Conducta Profesional</h4>
+            <p class="text-xs text-[#4f5360] mt-1.5 leading-relaxed">
+              Código de Ética Operativo para directivos y agentes. Sustanciación de quejas ciudadanas, sumarios y articulación con el Ministerio Público Fiscal.
+            </p>
+            <div class="mt-3 pt-3 border-t border-[#d9cfb8] space-y-1.5 text-xs text-[#1c1f26]">
+              <div><strong>Observancia Legal:</strong> Respeto irrestricto de derechos constitucionales y convivencia ciudadana.</div>
+              <div><strong>Registro de Sanciones:</strong> Historial disciplinario integrado de inhabilitaciones temporales o definitivas.</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#d9cfb8] flex justify-between items-center text-[11px] font-mono-code text-[#2d5a4a]">
+            <span>Click para ver Expediente Orgánico</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+
+        <!-- Dir 4: Supervisión -->
+        <div id="dir-card-4" onclick="inspectDirectorate(4)" class="figure-card p-5 flex flex-col justify-between cursor-pointer hover:border-[#14213d] transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="brass-badge crimson">04. Fiscalización</span>
+              <i data-lucide="search" class="w-5 h-5 text-[#9b2c2c]"></i>
+            </div>
+            <h4 class="text-lg font-serif-headline text-[#14213d] font-bold">Dirección de Supervisión y Control</h4>
+            <p class="text-xs text-[#4f5360] mt-1.5 leading-relaxed">
+              Cuerpo de inspectores provinciales en territorio. Verificación in situ de las 3 dimensiones: Empresas, Personal y Servicios prestados.
+            </p>
+            <div class="mt-3 pt-3 border-t border-[#d9cfb8] space-y-1.5 text-xs text-[#1c1f26]">
+              <div><strong>Modalidad Operativa:</strong> Inspecciones programadas y no anunciadas (aleatorias diurnas/nocturnas).</div>
+              <div><strong>Actas de Comprobación:</strong> Actas fehacientes (Art. 45 Ley 9.236) y cláusula de "Sin autorización para el uso de armas".</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#d9cfb8] flex justify-between items-center text-[11px] font-mono-code text-[#9b2c2c]">
+            <span>Click para ver Expediente Orgánico</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+
+        <!-- Dir 5: Tecnología -->
+        <div id="dir-card-5" onclick="inspectDirectorate(5)" class="figure-card p-5 flex flex-col justify-between cursor-pointer hover:border-[#14213d] transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="brass-badge navy">05. Tecnología</span>
+              <i data-lucide="cpu" class="w-5 h-5 text-[#14213d]"></i>
+            </div>
+            <h4 class="text-lg font-serif-headline text-[#14213d] font-bold">Dirección de Tecnología y Certificación</h4>
+            <p class="text-xs text-[#4f5360] mt-1.5 leading-relaxed">
+              Homologación técnica de sistemas: CCTV, centrales de monitoreo, controles biométricos, sensores perimetrales y drones de vigilancia.
+            </p>
+            <div class="mt-3 pt-3 border-t border-[#d9cfb8] space-y-1.5 text-xs text-[#1c1f26]">
+              <div><strong>Criterio Rector:</strong> No se certifica la mera compra de un equipo, sino su operatividad, mantenimiento y operador idóneo.</div>
+              <div><strong>Integración Pública:</strong> Protocolo de enlace con el Centro de Control de Videovigilancia de la Policía (Art. 41 Ley 10.954).</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#d9cfb8] flex justify-between items-center text-[11px] font-mono-code text-[#14213d]">
+            <span>Click para ver Expediente Orgánico</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+
+        <!-- Dir 6: Estadística -->
+        <div id="dir-card-6" onclick="inspectDirectorate(6)" class="figure-card p-5 flex flex-col justify-between cursor-pointer hover:border-[#14213d] transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="brass-badge">06. Estadística</span>
+              <i data-lucide="bar-chart-3" class="w-5 h-5 text-[#b08d57]"></i>
+            </div>
+            <h4 class="text-lg font-serif-headline text-[#14213d] font-bold">Dirección de Estadística, Información y Planificación</h4>
+            <p class="text-xs text-[#4f5360] mt-1.5 leading-relaxed">
+              Observatorio Provincial de Seguridad Privada y Plataforma Digital Integrada con reportes en tiempo real de recursos y anomalías.
+            </p>
+            <div class="mt-3 pt-3 border-t border-[#d9cfb8] space-y-1.5 text-xs text-[#1c1f26]">
+              <div><strong>Métricas del Sector:</strong> Mapeo georreferenciado de objetivos protegidos, incidentes y dotaciones por departamento.</div>
+              <div><strong>Evidencia Empírica:</strong> Producción del Informe Estadístico Anual para la toma de decisiones estratégicas del CoPEC.</div>
+            </div>
+          </div>
+          <div class="mt-4 pt-3 border-t border-[#d9cfb8] flex justify-between items-center text-[11px] font-mono-code text-[#b08d57]">
+            <span>Click para ver Expediente Orgánico</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transversal Risk Unit Highlight -->
+      <div id="dir-card-7" onclick="inspectDirectorate(7)" class="p-4 bg-[#ece5d4] border-l-4 border-[#b08d57] rounded flex flex-wrap items-center justify-between gap-4 text-xs cursor-pointer hover:bg-[#e4dcbe] transition-colors">
+        <div class="flex items-center gap-3">
+          <i data-lucide="compass" class="w-6 h-6 text-[#14213d]"></i>
+          <div>
+            <span class="font-bold text-[#14213d] text-sm">Unidad Técnica Transversal: Dirección de Diseño y Evaluación de Riesgos</span>
+            <p class="text-[#4f5360] mt-0.5">Determina técnicamente qué necesita protegerse antes de desplegar un servicio, elaborando las guías de contingencia hidrológica, ígnea y de multitudes.</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="brass-badge navy">Articulación Interáreas</span>
+          <span class="text-[11px] font-mono-code text-[#14213d] font-semibold underline">Ver Expediente</span>
+        </div>
+      </div>
+
+      <!-- Dossier Interactivo de la Dirección Seleccionada -->
+      <div id="directorate-dossier" class="bg-[#faf9f5] border-2 border-[#14213d] p-6 rounded space-y-4">
+        <!-- Contenido dinámico inyectado por inspectDirectorate(id) -->
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 4: CATÁLOGO DE ESPECIALIDADES & SIMULADOR DE CREDENCIAL DIGITAL   -->
+    <!-- ========================================================================= -->
+    <section id="especialidades" class="space-y-8">
+      <div class="border-b border-[#b08d57] pb-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <span class="brass-badge green">Acreditación Individual de Competencias</span>
+            <h2 class="text-2xl sm:text-3xl text-[#14213d] font-serif-headline mt-1">Catálogo de Especialidades por Nivel de Riesgo</h2>
+          </div>
+          <span class="text-xs font-mono-code text-[#4f5360]">Registro Digital Único de Agentes de Seguridad Privada</span>
+        </div>
+      </div>
+
+      <!-- Functional Category Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-4" id="category-cards">
+        <!-- Cat I -->
+        <div class="figure-card p-4 hover:border-[#14213d] transition-colors cursor-pointer" onclick="previewCredential('ASP-001094', 'Cat. I: Seguridad Crítica y Caudales', 'Transporte de Caudales, Custodia de Valores, Comunicaciones Críticas', 'Martín Ezequiel Pereyra', '2027-05-18')">
+          <span class="brass-badge crimson text-[10px]">Cat. I • Máximo</span>
+          <h4 class="text-sm font-serif-headline font-bold text-[#14213d] mt-2">Seguridad Crítica y Caudales</h4>
+          <p class="text-[11px] text-[#4f5360] mt-1">Custodia de valores, transporte blindado, subestaciones y activos estratégicos.</p>
+          <div class="mt-2 text-[10px] font-mono-code text-[#9b2c2c] font-semibold">Exigencia Psicofísica Anual</div>
+        </div>
+
+        <!-- Cat II -->
+        <div class="figure-card p-4 hover:border-[#14213d] transition-colors cursor-pointer" onclick="previewCredential('ASP-002845', 'Cat. II: Seguridad Institucional', 'Control de Accesos, Hospitales, Evacuación de Edificios, DEA', 'Valeria Inés Gómez', '2026-11-30')">
+          <span class="brass-badge navy text-[10px]">Cat. II • Alto</span>
+          <h4 class="text-sm font-serif-headline font-bold text-[#14213d] mt-2">Institucional y Funcional</h4>
+          <p class="text-[11px] text-[#4f5360] mt-1">Hospitales, centros educativos, juzgados y edificios corporativos.</p>
+          <div class="mt-2 text-[10px] font-mono-code text-[#14213d] font-semibold">Resolución Pacífica</div>
+        </div>
+
+        <!-- Cat III -->
+        <div class="figure-card p-4 hover:border-[#14213d] transition-colors cursor-pointer" onclick="previewCredential('ASP-004112', 'Cat. III: Eventos y Espectáculos', 'Gestión de Multitudes, Control de Admisión, Descompresión de Estampidas', 'Hugo Víctor Morales', '2026-09-15')">
+          <span class="brass-badge text-[10px]">Cat. III • Crítico</span>
+          <h4 class="text-sm font-serif-headline font-bold text-[#14213d] mt-2">Eventos y Concentraciones</h4>
+          <p class="text-[11px] text-[#4f5360] mt-1">Festivales (Cosquín, Jesús María), recitales, boliches bailables y fútbol.</p>
+          <div class="mt-2 text-[10px] font-mono-code text-[#b08d57] font-semibold">Control de Aforo y Desalojo</div>
+        </div>
+
+        <!-- Cat IV -->
+        <div class="figure-card p-4 hover:border-[#14213d] transition-colors cursor-pointer" onclick="previewCredential('ASP-005623', 'Cat. IV: Comercial e Industrial', 'Seguridad Fabril, Control de Cargas, Prevención de Pérdidas, Brigada Fuego', 'Claudio Rubén Álvarez', '2027-02-10')">
+          <span class="brass-badge text-[10px]">Cat. IV • Medio</span>
+          <h4 class="text-sm font-serif-headline font-bold text-[#14213d] mt-2">Comercial e Industrial</h4>
+          <p class="text-[11px] text-[#4f5360] mt-1">Parques fabriles, terminales de carga, hipermercados y distribución.</p>
+          <div class="mt-2 text-[10px] font-mono-code text-[#4f5360] font-semibold">Seguridad en Planta</div>
+        </div>
+
+        <!-- Cat V -->
+        <div class="figure-card p-4 hover:border-[#14213d] transition-colors cursor-pointer" onclick="previewCredential('ASP-007819', 'Cat. V: Perimetral y Predial', 'Vigilancia Perimetral, Monitoreo Electrónico, Alerta Crecientes e Incendio', 'Esteban Daniel Farías', '2026-12-05')">
+          <span class="brass-badge green text-[10px]">Cat. V • Específico</span>
+          <h4 class="text-sm font-serif-headline font-bold text-[#14213d] mt-2">Perimetral y Predial</h4>
+          <p class="text-[11px] text-[#4f5360] mt-1">Predios deshabitados, obras civiles extensas, barrios cerrados y estancias.</p>
+          <div class="mt-2 text-[10px] font-mono-code text-[#2d5a4a] font-semibold">Rondas y Detección Temprana</div>
+        </div>
+      </div>
+
+      <!-- Credential Interactive Simulator Preview -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#faf9f5] border border-[#d9cfb8] p-6 lg:p-8 rounded">
+        <!-- Interactive Controls -->
+        <div class="lg:col-span-6 space-y-4">
+          <div>
+            <span class="brass-badge navy">Tecnología de Trazabilidad</span>
+            <h3 class="text-xl sm:text-2xl text-[#14213d] font-serif-headline mt-1">Credencial Digital del Agente Habilitado</h3>
+            <p class="text-xs text-[#4f5360] mt-1 leading-relaxed">
+              Cada agente porta una credencial digital encriptada con código QR interoperable con el Sistema de Control de la Policía de Córdoba. Se verifica vigencia del examen psicofísico, empresa empleadora y habilitaciones específicas.
+            </p>
+          </div>
+
+          <div class="space-y-3 pt-2">
+            <div>
+              <label for="agent-selector" class="block text-xs font-semibold text-[#14213d] mb-1">Seleccionar Perfil de Agente de Ejemplo:</label>
+              <select id="agent-selector" onchange="onAgentSelectChange()" class="w-full charter-select text-xs">
+                <option value="boliche">Hugo Víctor Morales — ASP-004112 (Cat. III: Eventos & Boliches)</option>
+                <option value="caudales">Martín Ezequiel Pereyra — ASP-001094 (Cat. I: Custodia de Caudales)</option>
+                <option value="sanitario">Valeria Inés Gómez — ASP-002845 (Cat. II: Seguridad Hospitalaria)</option>
+                <option value="industrial">Claudio Rubén Álvarez — ASP-005623 (Cat. IV: Complejos Industriales)</option>
+                <option value="serrano">Esteban Daniel Farías — ASP-007819 (Cat. V: Perímetro Predial Serrano)</option>
+              </select>
+            </div>
+
+            <!-- Habilitaciones Transversales Adicionales (Checkboxes Dinámicos) -->
+            <div class="bg-[#faf9f5] p-3 rounded border border-[#d9cfb8] space-y-2">
+              <span class="block text-xs font-semibold text-[#14213d]">Habilitaciones Transversales Adicionales:</span>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-[#1c1f26]">
+                <label class="flex items-center gap-2 cursor-pointer select-none">
+                  <input type="checkbox" id="skill-cctv" checked onchange="updateTransversalBadges()" class="rounded border-[#d9cfb8] text-[#14213d] focus:ring-[#b08d57]">
+                  <span>Operador CCTV (Art. 41)</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer select-none">
+                  <input type="checkbox" id="skill-dea" checked onchange="updateTransversalBadges()" class="rounded border-[#d9cfb8] text-[#14213d] focus:ring-[#b08d57]">
+                  <span>Primeros Auxilios / DEA</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer select-none">
+                  <input type="checkbox" id="skill-fire" onchange="updateTransversalBadges()" class="rounded border-[#d9cfb8] text-[#14213d] focus:ring-[#b08d57]">
+                  <span>Brigadista Incendios</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer select-none">
+                  <input type="checkbox" id="skill-conflict" onchange="updateTransversalBadges()" class="rounded border-[#d9cfb8] text-[#14213d] focus:ring-[#b08d57]">
+                  <span>Resolución de Conflictos</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="p-3 bg-[#fffdf8] border border-[#d9cfb8] rounded text-xs text-[#4f5360] space-y-1">
+              <div class="flex items-center gap-2 text-[#14213d] font-semibold">
+                <i data-lucide="check" class="w-4 h-4 text-[#2d5a4a]"></i>
+                <span>Garantía de Acreditación Individual (No transferible)</span>
+              </div>
+              <p>El agente solo puede desempeñar tareas en puestos coincidentes con su categoría habilitada. El empleador que asigne personal no homologado incurre en falta grave (Art. 45 Ley 9.236).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- The Physical Card Rendering (Digital Mockup) -->
+        <div class="lg:col-span-6 flex justify-center">
+          <div class="w-full max-w-md bg-[#fffdf8] border-2 border-[#14213d] rounded-lg shadow-xl overflow-hidden font-sans">
+            <!-- Top Band of the Card -->
+            <div class="bg-[#14213d] text-white p-3.5 border-b-2 border-[#b08d57] flex items-center justify-between">
+              <div>
+                <p class="text-[9px] font-mono-code uppercase tracking-widest text-[#b08d57]">Gobierno de Córdoba • CoPEC</p>
+                <p class="text-xs font-bold font-serif-headline tracking-wide">ICSCESP — REGISTRO PROFESIONAL</p>
+              </div>
+              <span class="px-2 py-0.5 text-[10px] font-mono-code font-bold bg-[#2d5a4a] text-white rounded">VIGENTE</span>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-4 space-y-3">
+              <div class="flex gap-4 items-start">
+                <!-- Avatar / Photo Placeholder -->
+                <div class="w-20 h-24 bg-[#ece5d4] border border-[#b08d57] rounded flex flex-col items-center justify-center text-[#14213d] shrink-0">
+                  <i data-lucide="user-check" class="w-8 h-8 text-[#14213d]"></i>
+                  <span class="text-[9px] font-mono-code font-semibold mt-1">HABILITADO</span>
+                </div>
+
+                <!-- Personal & Registry Details -->
+                <div class="space-y-1 flex-grow text-xs">
+                  <div>
+                    <span class="text-[10px] text-[#4f5360] uppercase block">Agente de Seguridad Privada</span>
+                    <span id="card-name" class="font-bold text-[#14213d] text-sm block">Hugo Víctor Morales</span>
+                  </div>
+                  <div class="flex items-center justify-between text-[11px] font-mono-code">
+                    <span>Matrícula: <strong id="card-id" class="text-[#14213d]">ASP-004112</strong></span>
+                    <span>DNI: <strong>32.841.902</strong></span>
+                  </div>
+                  <div>
+                    <span class="text-[10px] text-[#4f5360] uppercase block">Empresa Empleadora Homologada</span>
+                    <span class="font-semibold text-[#14213d] text-[11px]">PROT-CBA SERVICIOS DE SEGURIDAD S.A.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Authorized Specialty Highlight -->
+              <div class="p-2.5 bg-[#ece5d4]/60 border border-[#d9cfb8] rounded text-xs">
+                <span class="text-[10px] font-mono-code uppercase text-[#b08d57] font-bold block">Especialidad Certificada:</span>
+                <span id="card-specialty" class="font-bold text-[#14213d] block mt-0.5">Cat. III: Eventos y Concentraciones Masivas</span>
+                <span id="card-competencies" class="text-[11px] text-[#4f5360] block mt-0.5">Manejo de Multitudes, Control de Admisión, Evacuación de Emergencia</span>
+                
+                <!-- Transversal Badges Render Container -->
+                <div class="mt-2 pt-2 border-t border-[#d9cfb8]">
+                  <span class="text-[9px] font-mono-code uppercase text-[#4f5360] font-bold block mb-1">Competencias Transversales Acreditadas:</span>
+                  <div id="card-transversal-badges" class="flex flex-wrap gap-1">
+                    <span class="brass-badge navy text-[9px] py-0 px-1.5">CCTV Homologado</span>
+                    <span class="brass-badge green text-[9px] py-0 px-1.5">Primeros Auxilios / DEA</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mandatory Legal Clausule (Art. 31 Ley 9.236) -->
+              <div class="p-2 bg-[#9b2c2c]/10 border border-[#9b2c2c]/30 rounded text-center">
+                <p class="text-[10px] font-bold text-[#9b2c2c] tracking-wide uppercase">
+                  "SIN AUTORIZACIÓN PARA EL USO DE ARMAS"
+                </p>
+                <p class="text-[9px] text-[#9b2c2c]/80">(Art. 31 Ley Provincial Nº 9.236)</p>
+              </div>
+
+              <!-- Bottom Row: Psychophysical Exam Date + Real-time QR SVG Mock -->
+              <div class="pt-2 border-t border-[#d9cfb8] flex items-center justify-between text-[10px] font-mono-code text-[#4f5360]">
+                <div>
+                  <span class="block">Apto Psicofísico Vigente:</span>
+                  <span id="card-validity" class="font-bold text-[#14213d]">Hasta: 15/09/2026 (Examen Anual)</span>
+                </div>
+                <!-- Mini QR SVG Vector -->
+                <div class="w-10 h-10 border border-[#14213d] bg-white p-0.5 flex items-center justify-center">
+                  <svg viewBox="0 0 24 24" class="w-full h-full text-[#14213d]" fill="currentColor" aria-label="Código QR de verificación digital">
+                    <rect x="2" y="2" width="6" height="6" fill="currentColor"/>
+                    <rect x="16" y="2" width="6" height="6" fill="currentColor"/>
+                    <rect x="2" y="16" width="6" height="6" fill="currentColor"/>
+                    <rect x="4" y="4" width="2" height="2" fill="white"/>
+                    <rect x="18" y="4" width="2" height="2" fill="white"/>
+                    <rect x="4" y="18" width="2" height="2" fill="white"/>
+                    <rect x="10" y="3" width="3" height="3" fill="currentColor"/>
+                    <rect x="3" y="10" width="3" height="3" fill="currentColor"/>
+                    <rect x="15" y="10" width="2" height="4" fill="currentColor"/>
+                    <rect x="10" y="15" width="4" height="2" fill="currentColor"/>
+                    <rect x="18" y="18" width="4" height="4" fill="currentColor"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 5: FINANCIAMIENTO MEDIANTE CUENTAS ESPECIALES (ART. 59 LEY 10.954) -->
+    <!-- ========================================================================= -->
+    <section id="financiamiento" class="space-y-8">
+      <div class="border-b border-[#b08d57] pb-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <span class="brass-badge navy">Mecanismo de Autonomía Económica</span>
+            <h2 class="text-2xl sm:text-3xl text-[#14213d] font-serif-headline mt-1">Financiamiento por Cuentas Especiales (Art. 59 Ley 10.954)</h2>
+          </div>
+          <span class="text-xs font-mono-code text-[#4f5360]">Banco de la Provincia de Córdoba S.A.</span>
+        </div>
+      </div>
+
+      <!-- Legal and Architectural Breakdown of the Fund -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="figure-card p-5">
+          <div class="flex items-center gap-2 text-[#14213d] font-bold text-sm mb-2">
+            <i data-lucide="landmark" class="w-5 h-5 text-[#b08d57]"></i>
+            <span>1. Cuenta Especial en Banco de Córdoba</span>
+          </div>
+          <p class="text-xs text-[#4f5360] leading-relaxed">
+            Conforme al Art. 59 de la Ley 10.954, los ingresos percibidos por servicios, tasas de habilitación y fiscalización ingresan a una cuenta especial diferenciada de la Ley 7386, administrada por el Ministerio de Seguridad para afectación específica al ICSCESP.
+          </p>
+        </div>
+
+        <div class="figure-card p-5">
+          <div class="flex items-center gap-2 text-[#14213d] font-bold text-sm mb-2">
+            <i data-lucide="receipt" class="w-5 h-5 text-[#b08d57]"></i>
+            <span>2. Tasas Administrativas y Multas</span>
+          </div>
+          <p class="text-xs text-[#4f5360] leading-relaxed">
+            Estructuradas en el Art. 30 de la Ley 9.236: habilitación y renovación anual de empresas, acreditación de personal dependiente, homologación de centros formativos y recaudación por multas con exigencia de depósito previo del 30% para apelar (Art. 49).
+          </p>
+        </div>
+
+        <div class="figure-card p-5">
+          <div class="flex items-center gap-2 text-[#14213d] font-bold text-sm mb-2">
+            <i data-lucide="shield-check" class="w-5 h-5 text-[#b08d57]"></i>
+            <span>3. Destino Específico No Desviable</span>
+          </div>
+          <p class="text-xs text-[#4f5360] leading-relaxed">
+            Los fondos no van a rentas generales: se destinan al sostenimiento del cuerpo de inspectores in situ, desarrollo continuo del Observatorio Estadístico, infraestructura tecnológica de fiscalización y homologación académica.
+          </p>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE BUDGET & REVENUE SIMULATOR -->
+      <div class="figure-card p-6 lg:p-8">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-[#d9cfb8]">
+          <div>
+            <h3 class="text-xl sm:text-2xl text-[#14213d] font-serif-headline">Simulador del Fondo de Sostenibilidad del Sistema</h3>
+            <p class="text-xs sm:text-sm text-[#4f5360] mt-0.5">Calcule la proyección anual de recaudación en la Cuenta Especial Bancor y examine la distribución presupuestaria normativa.</p>
+          </div>
+          <span class="brass-badge green">Sustentabilidad Presupuestaria Autónoma</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <!-- Simulator Inputs -->
+          <div class="lg:col-span-5 space-y-4">
+            <!-- Input 1: Active Companies -->
+            <div class="bg-[#faf9f5] p-3 rounded border border-[#d9cfb8]">
+              <div class="flex justify-between text-xs font-semibold text-[#14213d] mb-1">
+                <label for="calc-companies">Empresas Prestadoras Habilitadas:</label>
+                <span id="calc-companies-val" class="font-mono-code font-bold text-[#b08d57]">180 Empresas</span>
+              </div>
+              <input type="range" id="calc-companies" min="50" max="300" value="180" oninput="updateFinanceCalculations()" class="w-full h-2 bg-[#d9cfb8] rounded appearance-none cursor-pointer">
+              <span class="text-[10px] text-[#4f5360] block mt-1">Tasa anual de renovación y control de objetivo.</span>
+            </div>
+
+            <!-- Input 2: Total Guard Force -->
+            <div class="bg-[#faf9f5] p-3 rounded border border-[#d9cfb8]">
+              <div class="flex justify-between text-xs font-semibold text-[#14213d] mb-1">
+                <label for="calc-agents">Dotación de Agentes a Recertificar:</label>
+                <span id="calc-agents-val" class="font-mono-code font-bold text-[#b08d57]">14.500 Agentes</span>
+              </div>
+              <input type="range" id="calc-agents" min="5000" max="25000" step="500" value="14500" oninput="updateFinanceCalculations()" class="w-full h-2 bg-[#d9cfb8] rounded appearance-none cursor-pointer">
+              <span class="text-[10px] text-[#4f5360] block mt-1">Tasa de examen técnico, psicofísico y credencial digital.</span>
+            </div>
+
+            <!-- Input 3: Tech Certifications -->
+            <div class="bg-[#faf9f5] p-3 rounded border border-[#d9cfb8]">
+              <div class="flex justify-between text-xs font-semibold text-[#14213d] mb-1">
+                <label for="calc-audits">Inspecciones Operativas / Auditorías:</label>
+                <span id="calc-audits-val" class="font-mono-code font-bold text-[#b08d57]">850 Actas/Año</span>
+              </div>
+              <input type="range" id="calc-audits" min="200" max="2000" step="50" value="850" oninput="updateFinanceCalculations()" class="w-full h-2 bg-[#d9cfb8] rounded appearance-none cursor-pointer">
+              <span class="text-[10px] text-[#4f5360] block mt-1">Operativos diurnos/nocturnos e infracciones recuperadas.</span>
+            </div>
+
+            <!-- Total Revenue Box -->
+            <div class="p-4 bg-[#14213d] text-white rounded border border-[#b08d57]">
+              <span class="text-[10px] font-mono-code uppercase tracking-wider text-[#b08d57]">Recaudación Anual Estimada (Cuenta Especial Bancor)</span>
+              <div class="flex items-baseline gap-2 mt-1">
+                <span class="text-sm font-mono-code">$</span>
+                <span id="total-revenue-ars" class="text-3xl font-serif-headline text-[#f7f4ec] tabular-numbers font-bold">1.485.000.000</span>
+                <span class="text-xs font-mono-code text-[#b08d57]">ARS</span>
+              </div>
+              <p class="text-[11px] text-[#f7f4ec]/80 mt-1">
+                Fondo autónomo regulado por la Ley Impositiva Anual y Art. 59 de la Ley Provincial Nº 10.954.
+              </p>
+            </div>
+          </div>
+
+          <!-- Simulator Chart and Statutory Allocation Breakdown -->
+          <div class="lg:col-span-7 bg-[#faf9f5] border border-[#d9cfb8] p-5 rounded">
+            <h4 class="text-xs font-semibold uppercase tracking-wider text-[#14213d] mb-3 flex items-center justify-between">
+              <span>Distribución Presupuestaria Afectada (Art. 59 Ley 10.954)</span>
+              <span class="text-[11px] font-mono-code text-[#2d5a4a]">100% de Asignación Fija</span>
+            </h4>
+
+            <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+              <!-- Canvas Chart -->
+              <div class="sm:col-span-6 relative flex items-center justify-center min-h-[200px]">
+                <canvas id="financeChart" class="max-w-[200px] max-h-[200px]"></canvas>
+              </div>
+
+              <!-- Legend and Percentages -->
+              <div class="sm:col-span-6 space-y-2 text-xs">
+                <div class="flex items-center justify-between p-1.5 bg-white border border-[#d9cfb8] rounded">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-sm bg-[#14213d] shrink-0"></span>
+                    <span class="text-[#1c1f26]">Cuerpo de Inspectores & Fiscalización</span>
+                  </div>
+                  <strong class="font-mono-code text-[#14213d]">35%</strong>
+                </div>
+
+                <div class="flex items-center justify-between p-1.5 bg-white border border-[#d9cfb8] rounded">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-sm bg-[#b08d57] shrink-0"></span>
+                    <span class="text-[#1c1f26]">Observatorio & Plataforma Digital</span>
+                  </div>
+                  <strong class="font-mono-code text-[#b08d57]">25%</strong>
+                </div>
+
+                <div class="flex items-center justify-between p-1.5 bg-white border border-[#d9cfb8] rounded">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-sm bg-[#2d5a4a] shrink-0"></span>
+                    <span class="text-[#1c1f26]">Formación Continua & Convenios</span>
+                  </div>
+                  <strong class="font-mono-code text-[#2d5a4a]">20%</strong>
+                </div>
+
+                <div class="flex items-center justify-between p-1.5 bg-white border border-[#d9cfb8] rounded">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-sm bg-[#5b7aa0] shrink-0"></span>
+                    <span class="text-[#1c1f26]">Equipamiento Técnico Móvil</span>
+                  </div>
+                  <strong class="font-mono-code text-[#5b7aa0]">10%</strong>
+                </div>
+
+                <div class="flex items-center justify-between p-1.5 bg-white border border-[#d9cfb8] rounded">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-sm bg-[#9b2c2c] shrink-0"></span>
+                    <span class="text-[#1c1f26]">Fondo de Reserva Operativa</span>
+                  </div>
+                  <strong class="font-mono-code text-[#9b2c2c]">10%</strong>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-[11px] text-[#4f5360] mt-3 pt-2 border-t border-[#d9cfb8] italic">
+              "La procuración fiscal de las multas estará a cargo del cuerpo de abogados del Ministerio de Seguridad (Art. 50 Ley 9.236), garantizando ejecutabilidad y transparencia."
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 6: HOJA DE RUTA DE IMPLEMENTACIÓN PROGRESIVA EN 6 ETAPAS          -->
+    <!-- ========================================================================= -->
+    <section id="hoja-ruta" class="space-y-8">
+      <div class="border-b border-[#b08d57] pb-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <span class="brass-badge navy">Cronograma Operativo de Despliegue</span>
+            <h2 class="text-2xl sm:text-3xl text-[#14213d] font-serif-headline mt-1">Hoja de Ruta de Implementación en 6 Etapas</h2>
+          </div>
+          <span class="text-xs font-mono-code text-[#4f5360]">Plan Progresivo 24 Meses (Sin afectación del servicio)</span>
+        </div>
+      </div>
+
+      <!-- Roadmap Navigation Tabs -->
+      <div class="figure-card p-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+          <div>
+            <h3 class="text-xl text-[#14213d] font-serif-headline">Evolución Escalonada del Modelo Institucional</h3>
+            <p class="text-xs text-[#4f5360] mt-0.5">Seleccione cualquier etapa para visualizar entregables, plazos de cumplimiento e indicadores de impacto (KPIs).</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono-code text-[#4f5360]">Progreso General:</span>
+            <div class="w-32 bg-[#e3dac4] h-2.5 rounded-full overflow-hidden">
+              <div class="bg-[#2d5a4a] h-full" style="width: 35%;"></div>
+            </div>
+            <span class="text-xs font-mono-code font-bold text-[#2d5a4a]">35%</span>
+          </div>
+        </div>
+
+        <!-- 6 Stage Timeline Selector -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 border-b border-[#d9cfb8] pb-4 mb-6" id="roadmap-buttons" role="tablist" aria-label="Etapas de Implementación">
+          <button type="button" onclick="selectRoadmapStage(1)" id="stage-btn-1" role="tab" aria-selected="true" aria-controls="stage-panel" class="tab-btn p-2.5 text-left rounded border border-[#14213d] bg-[#14213d] text-white">
+            <span class="block text-[10px] font-mono-code text-[#b08d57] font-semibold">ETAPA 01</span>
+            <span class="block text-xs font-semibold mt-0.5">Organización</span>
+            <span class="block text-[10px] opacity-80 mt-0.5">Meses 1 - 3</span>
+          </button>
+          <button type="button" onclick="selectRoadmapStage(2)" id="stage-btn-2" role="tab" aria-selected="false" aria-controls="stage-panel" class="tab-btn p-2.5 text-left rounded border border-[#d9cfb8] bg-[#fffdf8] text-[#1c1f26] hover:bg-[#ece5d4]">
+            <span class="block text-[10px] font-mono-code text-[#b08d57] font-semibold">ETAPA 02</span>
+            <span class="block text-xs font-semibold mt-0.5">Clasificación</span>
+            <span class="block text-[10px] text-[#4f5360] mt-0.5">Meses 4 - 6</span>
+          </button>
+          <button type="button" onclick="selectRoadmapStage(3)" id="stage-btn-3" role="tab" aria-selected="false" aria-controls="stage-panel" class="tab-btn p-2.5 text-left rounded border border-[#d9cfb8] bg-[#fffdf8] text-[#1c1f26] hover:bg-[#ece5d4]">
+            <span class="block text-[10px] font-mono-code text-[#b08d57] font-semibold">ETAPA 03</span>
+            <span class="block text-xs font-semibold mt-0.5">Formación</span>
+            <span class="block text-[10px] text-[#4f5360] mt-0.5">Meses 7 - 10</span>
+          </button>
+          <button type="button" onclick="selectRoadmapStage(4)" id="stage-btn-4" role="tab" aria-selected="false" aria-controls="stage-panel" class="tab-btn p-2.5 text-left rounded border border-[#d9cfb8] bg-[#fffdf8] text-[#1c1f26] hover:bg-[#ece5d4]">
+            <span class="block text-[10px] font-mono-code text-[#b08d57] font-semibold">ETAPA 04</span>
+            <span class="block text-xs font-semibold mt-0.5">Certificación</span>
+            <span class="block text-[10px] text-[#4f5360] mt-0.5">Meses 11 - 15</span>
+          </button>
+          <button type="button" onclick="selectRoadmapStage(5)" id="stage-btn-5" role="tab" aria-selected="false" aria-controls="stage-panel" class="tab-btn p-2.5 text-left rounded border border-[#d9cfb8] bg-[#fffdf8] text-[#1c1f26] hover:bg-[#ece5d4]">
+            <span class="block text-[10px] font-mono-code text-[#b08d57] font-semibold">ETAPA 05</span>
+            <span class="block text-xs font-semibold mt-0.5">Fiscalización</span>
+            <span class="block text-[10px] text-[#4f5360] mt-0.5">Meses 16 - 20</span>
+          </button>
+          <button type="button" onclick="selectRoadmapStage(6)" id="stage-btn-6" role="tab" aria-selected="false" aria-controls="stage-panel" class="tab-btn p-2.5 text-left rounded border border-[#d9cfb8] bg-[#fffdf8] text-[#1c1f26] hover:bg-[#ece5d4]">
+            <span class="block text-[10px] font-mono-code text-[#b08d57] font-semibold">ETAPA 06</span>
+            <span class="block text-xs font-semibold mt-0.5">Consolidación</span>
+            <span class="block text-[10px] text-[#4f5360] mt-0.5">Meses 21 - 24</span>
+          </button>
+        </div>
+
+        <!-- Dynamic Content Panel for Selected Roadmap Stage -->
+        <div id="roadmap-detail-container" role="tabpanel" id="stage-panel" aria-labelledby="stage-btn-1" class="bg-[#faf9f5] border border-[#d9cfb8] p-6 rounded space-y-4">
+          <!-- Dynamically populated via selectRoadmapStage() -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 7: MARCO NORMATIVO INTEGRADO & CRÉDITOS TÉCNICOS                  -->
+    <!-- ========================================================================= -->
+    <section id="marco-legal" class="space-y-8">
+      <div class="border-b border-[#b08d57] pb-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <span class="brass-badge">Sustento Jurídico Pleno</span>
+            <h2 class="text-2xl sm:text-3xl text-[#14213d] font-serif-headline mt-1">Compendio Normativo Aplicable</h2>
+          </div>
+          <span class="text-xs font-mono-code text-[#4f5360]">Leyes Provinciales y Nacionales Vinculantes</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Law 10.954 Card -->
+        <div class="figure-card p-5">
+          <span class="brass-badge navy">Norma Matriz Provincial</span>
+          <h4 class="text-lg font-serif-headline text-[#14213d] font-bold mt-1.5">Ley Provincial Nº 10.954 (Diciembre 2023)</h4>
+          <p class="text-xs text-[#4f5360] mt-1">Ley de Seguridad Pública y Seguridad Ciudadana de la Provincia de Córdoba.</p>
+          <div class="mt-3 pt-3 border-t border-[#d9cfb8] text-xs space-y-2 text-[#1c1f26]">
+            <div><strong>Art. 14 & 62:</strong> Dependencia orgánica del Instituto de Formación respecto del Consejo para la Planificación Estratégica (CoPEC - Ley 9.475).</div>
+            <div><strong>Art. 28, 29 & 31:</strong> Articulación pública y privada, homologación de estándares y coordinación tecnológica.</div>
+            <div><strong>Art. 41:</strong> Integración de videovigilancia privada a los centros de monitoreo públicos.</div>
+            <div><strong>Art. 59:</strong> Creación de Cuentas Especiales en el Banco de Córdoba administradas por la cartera ministerial.</div>
+            <div><strong>Art. 60:</strong> Modificación al régimen de la Ley 10.571 de prestadores de seguridad privada.</div>
+          </div>
+        </div>
+
+        <!-- Law 10.571, 9.236 & 24.059 Card -->
+        <div class="figure-card p-5">
+          <span class="brass-badge">Régimen de Prestadores y Seguridad Interior</span>
+          <h4 class="text-lg font-serif-headline text-[#14213d] font-bold mt-1.5">Leyes Nº 10.571, 9.236, 9.475 y 24.059</h4>
+          <p class="text-xs text-[#4f5360] mt-1">Marco regulatorio específico, régimen de tasas, garantías e incompatibilidades.</p>
+          <div class="mt-3 pt-3 border-t border-[#d9cfb8] text-xs space-y-2 text-[#1c1f26]">
+            <div><strong>Ley 10.571:</strong> Régimen de Prestadores de Seguridad Privada de Córdoba (habilitaciones ministeriales).</div>
+            <div><strong>Ley 9.236 (Art. 18):</strong> Garantías reales de caución y obligatoriedad de examen técnico y psicofísico anual/bienal.</div>
+            <div><strong>Ley 9.236 (Art. 30):</strong> Tasas de habilitación de empresas, directores técnicos y centros de capacitación.</div>
+            <div><strong>Ley 9.236 (Art. 31):</strong> Prohibición taxativa de uso de armas ("Sin autorización para el uso de armas").</div>
+            <div><strong>Ley 9.236 (Art. 49 & 50):</strong> Depósito previo del 30% del valor de multa para recurrir y cobro por ejecución fiscal.</div>
+            <div><strong>Ley Nacional 24.059:</strong> Ley de Seguridad Interior y Convenio Policial Argentino.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Institutional Dossier Signature Block -->
+      <div class="p-6 bg-[#fffdf8] border-2 border-[#14213d] rounded text-xs space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#d9cfb8] pb-4">
+          <div>
+            <h4 class="text-base font-serif-headline font-bold text-[#14213d]">Constancia Institucional de Proyecto Técnico</h4>
+            <p class="text-[#4f5360] mt-0.5">Expediente de Creación y Propuesta Orgánica para el Fortalecimiento de la Seguridad y Convivencia en Córdoba.</p>
+          </div>
+          <div class="text-right font-mono-code text-[11px] text-[#4f5360]">
+            <div>REGISTRO: <strong>ICSCESP-CBA-2024/01</strong></div>
+            <div>FECHA DE REGISTRO: <strong>23 DE OCTUBRE DE 2024</strong></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+          <div class="p-3 bg-[#faf9f5] border border-[#d9cfb8] rounded">
+            <span class="text-[10px] font-mono-code text-[#4f5360] uppercase block">Autoría y Formulación Técnica</span>
+            <span class="font-serif-headline text-sm font-bold text-[#14213d] block mt-1">Subcrio. Lic. Hugo Víctor Callejo</span>
+            <span class="text-[11px] text-[#4f5360] block">Especialista en Seguridad y Planificación</span>
+          </div>
+
+          <div class="p-3 bg-[#faf9f5] border border-[#d9cfb8] rounded">
+            <span class="text-[10px] font-mono-code text-[#4f5360] uppercase block">Órgano de Dependencia Orgánica</span>
+            <span class="font-serif-headline text-sm font-bold text-[#14213d] block mt-1">CoPEC</span>
+            <span class="text-[11px] text-[#4f5360] block">Consejo para la Planificación Estratégica</span>
+          </div>
+
+          <div class="p-3 bg-[#faf9f5] border border-[#d9cfb8] rounded">
+            <span class="text-[10px] font-mono-code text-[#4f5360] uppercase block">Autoridad de Control y Aplicación</span>
+            <span class="font-serif-headline text-sm font-bold text-[#14213d] block mt-1">Ministerio de Seguridad</span>
+            <span class="text-[11px] text-[#4f5360] block">Gobierno de la Provincia de Córdoba</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0d1629] text-[#e3dac4] border-t-4 border-[#b08d57] mt-16 px-4 sm:px-6 lg:px-8 py-10 text-xs">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-1 text-center md:text-left">
+        <p class="font-serif-headline text-base text-white font-bold">Instituto de Capacitación, Supervisión, Control y Estadística para la Seguridad Privada</p>
+        <p class="text-[#e3dac4]/70">Sistema Integrado de Seguridad Pública y Seguridad Ciudadana • Ley Nº 10.954 • Provincia de Córdoba</p>
+      </div>
+
+      <div class="flex items-center gap-4 text-xs font-mono-code text-[#e3dac4]/70">
+        <a href="#calidad" class="hover:text-white transition-colors">Propuesta</a>
+        <span>•</span>
+        <a href="#matriz-riesgo" class="hover:text-white transition-colors">Matriz de Riesgos</a>
+        <span>•</span>
+        <a href="#direcciones" class="hover:text-white transition-colors">Direcciones</a>
+        <span>•</span>
+        <a href="#financiamiento" class="hover:text-white transition-colors">Financiamiento</a>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto mt-6 pt-4 border-t border-white/10 text-center text-[11px] text-[#e3dac4]/50 font-mono-code">
+      Documento Técnico Institucional elaborado con fines de formulación y difusión estratégica de la modernización normativa en Seguridad Privada.
+    </div>
+  </footer>
+
+  <!-- Notebook persistence API shim requirement -->
+  <api-shim></api-shim>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    // State persistence handler
+    let appPersistentState = {
+      selectedCircuitPhase: 1,
+      selectedRoadmapStage: 1,
+      currentPreset: 'boliche',
+      matrixObjType: 'evento',
+      exposure: 4,
+      vulnerability: 3,
+      readiness: 2,
+      chkFlood: true,
+      chkFire: true,
+      chkCrowd: true,
+      companiesCount: 180,
+      agentsCount: 14500,
+      auditsCount: 850
+    };
+
+    // Chart.js instance container
+    let financeChartInstance = null;
+
+    // Initialization on load
+    document.addEventListener('DOMContentLoaded', async function() {
+      // 1. Initialize Lucide Icons
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+
+      // 2. Restore state if available
+      await loadPersistentState();
+
+      // 3. Render initial views
+      selectCircuitPhase(appPersistentState.selectedCircuitPhase, false);
+      selectRoadmapStage(appPersistentState.selectedRoadmapStage, false);
+      calculateRiskMatrix(false);
+      initFinanceChart();
+      updateFinanceCalculations(false);
+
+      // Notify App Ready if shim is active
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+        window.notebookAppApi.notifyAppReady();
+      }
+    });
+
+    // Persistent storage helpers
+    async function loadPersistentState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === 'object') {
+            appPersistentState = Object.assign({}, appPersistentState, saved);
+
+            // Restore form inputs if available
+            const objSelect = document.getElementById('risk-obj-type');
+            if (objSelect && appPersistentState.matrixObjType) objSelect.value = appPersistentState.matrixObjType;
+
+            const expInput = document.getElementById('risk-exposure');
+            if (expInput && appPersistentState.exposure) expInput.value = appPersistentState.exposure;
+
+            const vulnInput = document.getElementById('risk-vulnerability');
+            if (vulnInput && appPersistentState.vulnerability) vulnInput.value = appPersistentState.vulnerability;
+
+            const readyInput = document.getElementById('risk-readiness');
+            if (readyInput && appPersistentState.readiness) readyInput.value = appPersistentState.readiness;
+
+            const chkFl = document.getElementById('chk-flood');
+            if (chkFl) chkFl.checked = appPersistentState.chkFlood;
+
+            const chkFi = document.getElementById('chk-fire');
+            if (chkFi) chkFi.checked = appPersistentState.chkFire;
+
+            const chkCr = document.getElementById('chk-crowd');
+            if (chkCr) chkCr.checked = appPersistentState.chkCrowd;
+
+            const compInput = document.getElementById('calc-companies');
+            if (compInput && appPersistentState.companiesCount) compInput.value = appPersistentState.companiesCount;
+
+            const agentInput = document.getElementById('calc-agents');
+            if (agentInput && appPersistentState.agentsCount) agentInput.value = appPersistentState.agentsCount;
+
+            const auditInput = document.getElementById('calc-audits');
+            if (auditInput && appPersistentState.auditsCount) auditInput.value = appPersistentState.auditsCount;
+
+            updateRiskSliders();
+          }
+        } catch (e) {
+          console.warn('Error retrieving app state:', e);
+        }
+      }
+    }
+
+    async function savePersistentState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+        try {
+          await window.notebookAppApi.setAppState(appPersistentState);
+        } catch (e) {
+          console.warn('Error saving app state:', e);
+        }
+      }
+    }
+
+    // ========================================================
+    // CIRCUIT OF QUALITY INTERACTIVE STEPPER (5 PHASES)
+    // ========================================================
+    const circuitPhasesData = {
+      1: {
+        number: "01",
+        title: "Identificación del Riesgo Operativo",
+        subtitle: "Evaluación Técnica Previa al Despliegue de Seguridad",
+        legalRef: "Art. 28 y 29 — Ley Provincial Nº 10.954",
+        focus: "El servicio no se cotiza por metros cuadrados o pedido comercial: se elabora un mapa de vulnerabilidades físicas, antrópicas y ambientales del predio.",
+        actions: [
+          "Relevamiento topográfico: proximidad a cursos de agua y cota de inundación histórica.",
+          "Cálculo de carga de fuego y salidas de escape según normas vigentes.",
+          "Densidad máxima de concurrencia de público y análisis de estrangulamientos en accesos.",
+          "Informe preliminar vinculante emitido por profesional homologado por ICSCESP."
+        ],
+        badge: "Diagnóstico Obligatorio",
+        badgeColor: "crimson"
+      },
+      2: {
+        number: "02",
+        title: "Definición de la Especialidad Funcional",
+        subtitle: "Alineación de Puesto con Competencias Certificadas",
+        legalRef: "Arts. 18 y 20 — Ley Nº 9.236 y Modif. Ley 10.954",
+        focus: "El vigilador general queda reemplazado por agentes con competencias verificadas para cada uno de los 5 niveles de riesgo provinciales.",
+        actions: [
+          "Asignación estricta al catálogo: Cat. I (Caudales), II (Institucional), III (Eventos), IV (Industrial) o V (Perimetral).",
+          "Acreditación de formación transversal obligatoria: DEA, primeros auxilios y lucha inicial contra el fuego.",
+          "Verificación del certificado de no antecedentes y examen psicofísico específico.",
+          "Prohibición expresa de reasignar personal a objetivos de riesgo superior sin revalidación."
+        ],
+        badge: "Competencias Específicas",
+        badgeColor: "navy"
+      },
+      3: {
+        number: "03",
+        title: "Certificación Integral de la Capacidad",
+        subtitle: "La Trilogía de Aseguramiento Operativo",
+        legalRef: "Arts. 30 y 31 — Ley 9.236 / Art. 41 Ley 10.954",
+        focus: "No se habilita solo al vigilador: se certifica que la empresa tenga supervisión real y que la tecnología instalada responda al riesgo.",
+        actions: [
+          "Empresa: Estructura de supervisión móvil, vehículos identificados y protocolos de contingencia auditados.",
+          "Agente: Emisión de la Credencial Digital ASP-XXXX con código QR y cláusula 'Sin autorización de armas'.",
+          "Tecnología: Homologación de CCTV, sensores perimetrales y respaldo ininterrumpido de energía (UPS).",
+          "Enlace con la Policía de Córdoba y Centros de Despacho 911."
+        ],
+        badge: "Trilogía Verificada",
+        badgeColor: "green"
+      },
+      4: {
+        number: "04",
+        title: "Supervisión y Control In Situ",
+        subtitle: "Fiscalización Activa Programada y Aleatoria",
+        legalRef: "Arts. 45 y 49 — Ley Provincial Nº 9.236",
+        focus: "Inspecciones en terreno para auditar dotaciones reales, verificar credenciales biométricas y comprobar vías de escape expeditas.",
+        actions: [
+          "Operativos diurnos y nocturnos con inspectores acreditados del Ministerio de Seguridad e ICSCESP.",
+          "Control de actas digitales: verificación de que el personal de servicio coincida con la nómina declarada.",
+          "Inspección física de planes de contingencia ante inundación o siniestro ígneo.",
+          "Labrado de actas de infracción fehacientes con depósito previo del 30% en Bancor para apelar."
+        ],
+        badge: "Auditoría en Terreno",
+        badgeColor: "crimson"
+      },
+      5: {
+        number: "05",
+        title: "Medición, Estadística y Mejora Continua",
+        subtitle: "Evidencia Empírica para la Política Criminal y de Convivencia",
+        legalRef: "Arts. 62 y 65 — Ley Nº 9.475 y Ley 10.954",
+        focus: "El Observatorio de Seguridad Privada procesa los reportes para actualizar mapas de riesgo departamentales y adecuar la formación.",
+        actions: [
+          "Plataforma Digital Integrada: registro en tiempo real de incidentes, actas y renovaciones.",
+          "Publicación del Informe Estadístico Anual del Subsistema de Seguridad Privada.",
+          "Actualización de contenidos curriculares en coordinación con universidades y academias homologadas.",
+          "Examen de recertificación obligatoria: anual para vigiladores/escoltas y bienal para directores técnicos."
+        ],
+        badge: "Observatorio en Tiempo Real",
+        badgeColor: "navy"
+      }
+    };
+
+    function selectCircuitPhase(phaseNumber, shouldSave = true) {
+      appPersistentState.selectedCircuitPhase = phaseNumber;
+
+      // Update button visual styles
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.getElementById(`circuit-btn-${i}`);
+        if (!btn) continue;
+        if (i === phaseNumber) {
+          btn.setAttribute('aria-selected', 'true');
+          btn.className = 'tab-btn p-3 text-left rounded border border-[#14213d] bg-[#14213d] text-white';
+          const sub = btn.querySelector('span:nth-child(3)');
+          if (sub) sub.className = 'block text-[11px] opacity-80 mt-1';
+        } else {
+          btn.setAttribute('aria-selected', 'false');
+          btn.className = 'tab-btn p-3 text-left rounded border border-[#d9cfb8] bg-[#fffdf8] text-[#1c1f26] hover:bg-[#ece5d4]';
+          const sub = btn.querySelector('span:nth-child(3)');
+          if (sub) sub.className = 'block text-[11px] text-[#4f5360] mt-1';
+        }
+      }
+
+      // Populate Detail Container
+      const data = circuitPhasesData[phaseNumber];
+      const container = document.getElementById('circuit-detail-container');
+      if (container && data) {
+        let actionListHtml = '';
+        data.actions.forEach(act => {
+          actionListHtml += `
+            <li class="flex items-start gap-2">
+              <i data-lucide="check-circle" class="w-4 h-4 text-[#2d5a4a] mt-0.5 shrink-0"></i>
+              <span>${act}</span>
+            </li>
+          `;
+        });
+
+        container.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#d9cfb8] pb-3 mb-4">
+            <div>
+              <span class="text-[10px] font-mono-code text-[#b08d57] font-semibold uppercase tracking-wider">Fase del Ciclo de Calidad • Etapa ${data.number}</span>
+              <h4 class="text-xl font-serif-headline text-[#14213d] font-bold mt-0.5">${data.title}</h4>
+              <p class="text-xs text-[#4f5360]">${data.subtitle}</p>
+            </div>
+            <div class="text-right">
+              <span class="brass-badge ${data.badgeColor}">${data.badge}</span>
+              <p class="text-[10px] font-mono-code text-[#4f5360] mt-1">${data.legalRef}</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+            <div class="md:col-span-5 bg-[#fffdf8] p-4 rounded border border-[#d9cfb8]">
+              <span class="text-[10px] font-mono-code text-[#b08d57] uppercase font-bold block mb-1">Criterio Rector ICSCESP:</span>
+              <p class="text-xs text-[#1c1f26] leading-relaxed italic">
+                "${data.focus}"
+              </p>
+              <div class="mt-3 pt-3 border-t border-[#d9cfb8] text-[11px] font-mono-code text-[#2d5a4a] flex items-center gap-1.5">
+                <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+                <span>Garantía de cumplimiento Ley Nº 10.954</span>
+              </div>
+            </div>
+
+            <div class="md:col-span-7">
+              <span class="text-[10px] font-mono-code text-[#14213d] uppercase font-bold block mb-2">Protocolos y Mecanismos de Ejecución:</span>
+              <ul class="text-xs space-y-2 text-[#1c1f26]">
+                ${actionListHtml}
+              </ul>
+            </div>
+          </div>
+        `;
+
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+          window.lucide.createIcons();
+        }
+      }
+
+      if (shouldSave) savePersistentState();
+    }
+
+    // ========================================================
+    // RISK MATRIX & CONTINGENCY SIMULATOR LOGIC
+    // ========================================================
+    const riskPresets = {
+      boliche: {
+        obj: 'evento',
+        exposure: 4,
+        vuln: 3,
+        readiness: 2,
+        flood: false,
+        fire: true,
+        crowd: true
+      },
+      industrial: {
+        obj: 'industrial',
+        exposure: 3,
+        vuln: 3,
+        readiness: 2,
+        flood: false,
+        fire: true,
+        crowd: false
+      },
+      serrano: {
+        obj: 'perimetral',
+        exposure: 2,
+        vuln: 4,
+        readiness: 1,
+        flood: true,
+        fire: true,
+        crowd: false
+      },
+      caudales: {
+        obj: 'caudales',
+        exposure: 5,
+        vuln: 4,
+        readiness: 3,
+        flood: false,
+        fire: false,
+        crowd: true
+      },
+      sanitario: {
+        obj: 'sanitario',
+        exposure: 4,
+        vuln: 2,
+        readiness: 2,
+        flood: false,
+        fire: true,
+        crowd: true
+      }
+    };
+
+    function loadRiskPreset(key) {
+      const p = riskPresets[key];
+      if (!p) return;
+      appPersistentState.currentPreset = key;
+      appPersistentState.matrixObjType = p.obj;
+      appPersistentState.exposure = p.exposure;
+      appPersistentState.vulnerability = p.vuln;
+      appPersistentState.readiness = p.readiness;
+      appPersistentState.chkFlood = p.flood;
+      appPersistentState.chkFire = p.fire;
+      appPersistentState.chkCrowd = p.crowd;
+
+      // Update UI elements
+      const objSelect = document.getElementById('risk-obj-type');
+      if (objSelect) objSelect.value = p.obj;
+
+      const expInput = document.getElementById('risk-exposure');
+      if (expInput) expInput.value = p.exposure;
+
+      const vulnInput = document.getElementById('risk-vulnerability');
+      if (vulnInput) vulnInput.value = p.vuln;
+
+      const readyInput = document.getElementById('risk-readiness');
+      if (readyInput) readyInput.value = p.readiness;
+
+      const chkFl = document.getElementById('chk-flood');
+      if (chkFl) chkFl.checked = p.flood;
+
+      const chkFi = document.getElementById('chk-fire');
+      if (chkFi) chkFi.checked = p.fire;
+
+      const chkCr = document.getElementById('chk-crowd');
+      if (chkCr) chkCr.checked = p.crowd;
+
+      updateRiskSliders();
+      calculateRiskMatrix();
+    }
+
+    function updateRiskSliders() {
+      const expInput = document.getElementById('risk-exposure');
+      const vulnInput = document.getElementById('risk-vulnerability');
+      const readyInput = document.getElementById('risk-readiness');
+
+      const expVal = expInput ? parseInt(expInput.value, 10) : 4;
+      const vulnVal = vulnInput ? parseInt(vulnInput.value, 10) : 3;
+      const readyVal = readyInput ? parseInt(readyInput.value, 10) : 2;
+
+      appPersistentState.exposure = expVal;
+      appPersistentState.vulnerability = vulnVal;
+      appPersistentState.readiness = readyVal;
+
+      const expLabel = document.getElementById('risk-exposure-val');
+      if (expLabel) {
+        const txts = [
+          'Nivel 1 — Mínima (<50 personas)',
+          'Nivel 2 — Moderada (50-300 personas)',
+          'Nivel 3 — Media (300-1.000 personas)',
+          'Nivel 4 — Muy Alta (1.000-3.500 personas)',
+          'Nivel 5 — Masiva Crítica (>3.500 personas)'
+        ];
+        expLabel.textContent = txts[expVal - 1] || 'Nivel 4';
+      }
+
+      const vulnLabel = document.getElementById('risk-vuln-val');
+      if (vulnLabel) {
+        const txts = [
+          'Baja (Urbano consolidado)',
+          'Media (Anegamiento moderado)',
+          'Alta (Sierras / Carga de Fuego)',
+          'Extrema (Riesgo Hidro-Ígneo Severo)'
+        ];
+        vulnLabel.textContent = txts[vulnVal - 1] || 'Alta';
+      }
+
+      const readyLabel = document.getElementById('risk-readiness-val');
+      if (readyLabel) {
+        const txts = [
+          'Básica (Mitigación mínima)',
+          'Estándar (Alarmas + Brigada inicial)',
+          'Avanzada (Redundancia técnica y enlace 911)'
+        ];
+        readyLabel.textContent = txts[readyVal - 1] || 'Estándar';
+      }
+    }
+
+    function calculateRiskMatrix(shouldSave = true) {
+      const objSelect = document.getElementById('risk-obj-type');
+      const expInput = document.getElementById('risk-exposure');
+      const vulnInput = document.getElementById('risk-vulnerability');
+      const readyInput = document.getElementById('risk-readiness');
+
+      const chkFl = document.getElementById('chk-flood');
+      const chkFi = document.getElementById('chk-fire');
+      const chkCr = document.getElementById('chk-crowd');
+
+      const obj = objSelect ? objSelect.value : 'evento';
+      const exp = expInput ? parseInt(expInput.value, 10) : 4;
+      const vuln = vulnInput ? parseInt(vulnInput.value, 10) : 3;
+      const ready = readyInput ? parseInt(readyInput.value, 10) : 2;
+
+      const hasFlood = chkFl ? chkFl.checked : false;
+      const hasFire = chkFi ? chkFi.checked : false;
+      const hasCrowd = chkCr ? chkCr.checked : false;
+
+      appPersistentState.matrixObjType = obj;
+      appPersistentState.chkFlood = hasFlood;
+      appPersistentState.chkFire = hasFire;
+      appPersistentState.chkCrowd = hasCrowd;
+
+      // Base weights by objective
+      let baseWeight = 25;
+      let defaultCat = "Categoría III — Eventos Masivos";
+      let catDesc = "Personal especializado en manejo de multitudes, evacuación antipánico y desescalada pacífica.";
+
+      if (obj === 'caudales') {
+        baseWeight = 45;
+        defaultCat = "Categoría I — Seguridad Crítica y Caudales";
+        catDesc = "Custodia de valores, comunicaciones blindadas, evaluación de amenazas armadas y protocolos de contingencia crítica.";
+      } else if (obj === 'sanitario') {
+        baseWeight = 22;
+        defaultCat = "Categoría II — Institucional y Funcional";
+        catDesc = "Control de accesos hospitalarios, resguardo de personal médico, primeros auxilios / DEA y desalojo ordenado.";
+      } else if (obj === 'industrial') {
+        baseWeight = 28;
+        defaultCat = "Categoría IV — Comercial e Industrial";
+        catDesc = "Seguridad patrimonial fabril, brigadistas contra incendio industrial y control de logística y cargas pesadas.";
+      } else if (obj === 'perimetral') {
+        baseWeight = 20;
+        defaultCat = "Categoría V — Perimetral y Predial";
+        catDesc = "Vigilancia perimetral en predios serranos o deshabitados, detección de intrusión y protocolos de alerta de crecientes.";
+      } else if (obj === 'educativo') {
+        baseWeight = 18;
+        defaultCat = "Categoría II — Seguridad Institucional";
+        catDesc = "Control preventivo de accesos escolares/universitarios, resolución pacífica y evacuación edilicia.";
+      }
+
+      // Compute Composite Score: 0 to 100
+      let computedScore = baseWeight + (exp * 7) + (vuln * 6) - (ready * 5);
+      if (hasFlood) computedScore += 7;
+      if (hasFire) computedScore += 8;
+      if (hasCrowd) computedScore += 9;
+
+      // Clamp between 10 and 100
+      computedScore = Math.max(12, Math.min(99, computedScore));
+
+      // Update Matrix Score on UI
+      const scoreEl = document.getElementById('matrix-score');
+      if (scoreEl) scoreEl.textContent = computedScore;
+
+      const meterBar = document.getElementById('risk-meter-bar');
+      if (meterBar) meterBar.style.width = `${computedScore}%`;
+
+      const levelBadge = document.getElementById('matrix-level-badge');
+      let riskLevelText = "Riesgo Moderado";
+      let badgeClass = "mt-1 inline-block px-3 py-1 rounded text-xs font-bold tracking-wider uppercase ";
+
+      if (computedScore >= 75) {
+        riskLevelText = "Riesgo Crítico / Categoría Especial";
+        badgeClass += "bg-[#9b2c2c] text-white";
+        if (meterBar) meterBar.className = "bg-[#9b2c2c] h-full transition-all duration-300";
+      } else if (computedScore >= 50) {
+        riskLevelText = "Riesgo Alto / Exigencia Reforzada";
+        badgeClass += "bg-[#b45309] text-white";
+        if (meterBar) meterBar.className = "bg-[#b45309] h-full transition-all duration-300";
+      } else if (computedScore >= 26) {
+        riskLevelText = "Riesgo Moderado / Protocolo Estándar";
+        badgeClass += "bg-[#b08d57] text-[#14213d]";
+        if (meterBar) meterBar.className = "bg-[#b08d57] h-full transition-all duration-300";
+      } else {
+        riskLevelText = "Riesgo Bajo / Vigilancia Básica";
+        badgeClass += "bg-[#2d5a4a] text-white";
+        if (meterBar) meterBar.className = "bg-[#2d5a4a] h-full transition-all duration-300";
+      }
+
+      if (levelBadge) {
+        levelBadge.className = badgeClass;
+        levelBadge.textContent = riskLevelText;
+      }
+
+      // Update Required Contingency Plans
+      const plansList = document.getElementById('required-plans-list');
+      if (plansList) {
+        let plansHtml = '';
+
+        // Hydrological plan
+        if (hasFlood || obj === 'perimetral' || vuln >= 3) {
+          plansHtml += `
+            <div class="p-2.5 bg-white border-l-4 border-[#1f4e5f] border-y border-r border-[#d9cfb8] rounded flex items-start gap-2">
+              <i data-lucide="droplets" class="w-4 h-4 text-[#1f4e5f] shrink-0 mt-0.5"></i>
+              <div>
+                <span class="font-bold text-[#14213d] block">Plan de Contingencia Hidrológica y Crecientes Serranas (Mandatorio)</span>
+                <span class="text-[11px] text-[#4f5360] block">Monitoreo de cuenca, desconexión rápida de energía en zonas bajas, rutas de repliegue señalizadas y enlace de radio con Defensa Civil.</span>
+              </div>
+            </div>
+          `;
+        }
+
+        // Fire plan
+        if (hasFire || obj === 'industrial' || obj === 'evento' || vuln >= 2) {
+          plansHtml += `
+            <div class="p-2.5 bg-white border-l-4 border-[#9b2c2c] border-y border-r border-[#d9cfb8] rounded flex items-start gap-2">
+              <i data-lucide="flame" class="w-4 h-4 text-[#9b2c2c] shrink-0 mt-0.5"></i>
+              <div>
+                <span class="font-bold text-[#14213d] block">Plan de Evacuación y Primer Combate de Incendios (Mandatorio)</span>
+                <span class="text-[11px] text-[#4f5360] block">Certificación de puertas antipánico libres de cerrojos, extintores vigentes, línea de hidrantes y brigadistas capacitados con apto psicofísico.</span>
+              </div>
+            </div>
+          `;
+        }
+
+        // Anthropic plan
+        if (hasCrowd || obj === 'evento' || obj === 'caudales' || exp >= 3) {
+          plansHtml += `
+            <div class="p-2.5 bg-white border-l-4 border-[#b08d57] border-y border-r border-[#d9cfb8] rounded flex items-start gap-2">
+              <i data-lucide="shield-alert" class="w-4 h-4 text-[#b08d57] shrink-0 mt-0.5"></i>
+              <div>
+                <span class="font-bold text-[#14213d] block">Protocolo Antidisturbios y Manejo de Estampidas / Intrusión Armada</span>
+                <span class="text-[11px] text-[#4f5360] block">Control estricto de aforo biométrico, desescalada verbal sin armas (Art. 31 Ley 9.236) y activación de alerta de pánico hacia Policía de Córdoba.</span>
+              </div>
+            </div>
+          `;
+        }
+
+        plansList.innerHTML = plansHtml;
+      }
+
+      // Update Required Category description
+      const catTitleEl = document.getElementById('required-cat-title');
+      const catDescEl = document.getElementById('required-cat-desc');
+      if (catTitleEl) catTitleEl.textContent = `Especialidad Exigida: ${defaultCat}`;
+      if (catDescEl) catDescEl.textContent = catDesc;
+
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+
+      if (shouldSave) savePersistentState();
+    }
+
+    // ========================================================
+    // CREDENTIAL PREVIEW SIMULATOR
+    // ========================================================
+    const agentProfiles = {
+      boliche: {
+        id: "ASP-004112",
+        name: "Hugo Víctor Morales",
+        cat: "Cat. III: Eventos y Concentraciones Masivas",
+        comp: "Manejo de Multitudes, Control de Admisión, Evacuación Antipánico",
+        date: "15/09/2026 (Examen Anual)"
+      },
+      caudales: {
+        id: "ASP-001094",
+        name: "Martín Ezequiel Pereyra",
+        cat: "Cat. I: Seguridad Crítica y Caudales",
+        comp: "Transporte de Caudales, Custodia de Valores, Comunicaciones Críticas",
+        date: "18/05/2027 (Examen Anual)"
+      },
+      sanitario: {
+        id: "ASP-002845",
+        name: "Valeria Inés Gómez",
+        cat: "Cat. II: Seguridad Institucional y Hospitalaria",
+        comp: "Control de Accesos, Resguardo Sanitario, Primeros Auxilios / DEA",
+        date: "30/11/2026 (Examen Anual)"
+      },
+      industrial: {
+        id: "ASP-005623",
+        name: "Claudio Rubén Álvarez",
+        cat: "Cat. IV: Comercial e Industrial",
+        comp: "Seguridad Fabril, Control de Cargas, Brigada de Incendio en Planta",
+        date: "10/02/2027 (Examen Anual)"
+      },
+      serrano: {
+        id: "ASP-007819",
+        name: "Esteban Daniel Farías",
+        cat: "Cat. V: Perimetral y Predial Serrano",
+        comp: "Vigilancia Perimetral, Detección de Fuego, Alerta de Crecientes",
+        date: "05/12/2026 (Examen Anual)"
+      }
+    };
+
+    function onAgentSelectChange() {
+      const sel = document.getElementById('agent-selector');
+      if (!sel) return;
+      const prof = agentProfiles[sel.value];
+      if (prof) {
+        previewCredential(prof.id, prof.cat, prof.comp, prof.name, prof.date);
+      }
+    }
+
+    function previewCredential(id, cat, comp, name, date) {
+      const idEl = document.getElementById('card-id');
+      const nameEl = document.getElementById('card-name');
+      const catEl = document.getElementById('card-specialty');
+      const compEl = document.getElementById('card-competencies');
+      const valEl = document.getElementById('card-validity');
+
+      if (idEl) idEl.textContent = id;
+      if (nameEl) nameEl.textContent = name;
+      if (catEl) catEl.textContent = cat;
+      if (compEl) compEl.textContent = comp;
+      if (valEl) valEl.textContent = `Hasta: ${date}`;
+    }
+
+    // ========================================================
+    // FINANCE SIMULATOR (ART. 59 LEY 10.954 / BANCO DE CÓRDOBA)
+    // ========================================================
+    function updateFinanceCalculations(shouldSave = true) {
+      const compInput = document.getElementById('calc-companies');
+      const agentInput = document.getElementById('calc-agents');
+      const auditInput = document.getElementById('calc-audits');
+
+      const companies = compInput ? parseInt(compInput.value, 10) : 180;
+      const agents = agentInput ? parseInt(agentInput.value, 10) : 14500;
+      const audits = auditInput ? parseInt(auditInput.value, 10) : 850;
+
+      appPersistentState.companiesCount = companies;
+      appPersistentState.agentsCount = agents;
+      appPersistentState.auditsCount = audits;
+
+      const compValLabel = document.getElementById('calc-companies-val');
+      if (compValLabel) compValLabel.textContent = `${companies} Empresas`;
+
+      const agentValLabel = document.getElementById('calc-agents-val');
+      if (agentValLabel) agentValLabel.textContent = `${agents.toLocaleString('es-AR')} Agentes`;
+
+      const auditValLabel = document.getElementById('calc-audits-val');
+      if (auditValLabel) auditValLabel.textContent = `${audits} Actas/Año`;
+
+      // Mathematical projection based on Córdoba Provincial Tax Law units
+      // Average Annual Corporate Registration Fee: ~$1.800.000 ARS
+      // Individual Credential / Exam Registration Fee: ~$65.000 ARS
+      // Audit / Tech Cert / Penalties Revenue per inspected target: ~$320.000 ARS
+      const corporateRev = companies * 1800000;
+      const agentsRev = agents * 65000;
+      const auditsRev = audits * 320000;
+      const totalRev = corporateRev + agentsRev + auditsRev;
+
+      const totalRevenueEl = document.getElementById('total-revenue-ars');
+      if (totalRevenueEl) {
+        totalRevenueEl.textContent = totalRev.toLocaleString('es-AR');
+      }
+
+      if (shouldSave) savePersistentState();
+    }
+
+    function initFinanceChart() {
+      const ctx = document.getElementById('financeChart');
+      if (!ctx) return;
+
+      if (financeChartInstance) {
+        financeChartInstance.destroy();
+      }
+
+      financeChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: [
+            'Cuerpo de Inspectores (35%)',
+            'Observatorio Digital (25%)',
+            'Formación Continua (20%)',
+            'Equipamiento Móvil (10%)',
+            'Reserva Operativa (10%)'
+          ],
+          datasets: [{
+            data: [35, 25, 20, 10, 10],
+            backgroundColor: [
+              '#14213d', // Navy
+              '#b08d57', // Brass
+              '#2d5a4a', // Bottle green
+              '#5b7aa0', // Slate blue
+              '#9b2c2c'  // Crimson
+            ],
+            borderWidth: 2,
+            borderColor: '#fffdf8'
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return ` ${context.label}: ${context.raw}%`;
+                }
+              }
+            }
+          },
+          cutout: '65%'
+        }
+      });
+    }
+
+    // ========================================================
+    // 6-STAGE ROADMAP LOGIC
+    // ========================================================
+    const roadmapStagesData = {
+      1: {
+        number: "01",
+        title: "Organización Institucional y Marco CoPEC",
+        timeline: "Meses 1 a 3",
+        status: "En Ejecución Avanzada (70%)",
+        statusBadge: "navy",
+        objective: "Constitución formal del Instituto en el ámbito de CoPEC (Art. 14 Ley 10.954), reglamentación del estatuto orgánico y habilitación de las Cuentas Especiales en el Banco de Córdoba.",
+        milestones: [
+          "Firma del decreto reglamentario de la estructura del ICSCESP en el marco de la Ley Nº 10.954.",
+          "Designación de las autoridades del Consejo Directivo y los 6 Directores de Área.",
+          "Apertura formal de la Cuenta Especial en Bancor conforme a las directivas del Ministerio de Seguridad.",
+          "Conformación de la Mesa Técnica Permanente con representantes de cámaras de seguridad y CoPEC."
+        ],
+        kpi: "100% de la arquitectura legal reglamentada y cuentas operativas en Bancor."
+      },
+      2: {
+        number: "02",
+        title: "Clasificación Profesional y Catálogo de Riesgos",
+        timeline: "Meses 4 a 6",
+        status: "Programada",
+        statusBadge: "green",
+        objective: "Publicación oficial del Catálogo de Especialidades por Nivel de Riesgo (Categorías I a V) y reglamentación de la Matriz Obligatoria de Evaluación de Riesgos y Contingencias.",
+        milestones: [
+          "Aprobación del Manual Operativo de Matrices de Riesgo (inundación serrana, incendio y contingencias antrópicas).",
+          "Publicación de los perfiles de puesto y estándares de apto psicofísico anual/bienal (Art. 18 Ley 9.236).",
+          "Definición de las condiciones técnicas mínimas de sistemas de videovigilancia y alarmas por categoría.",
+          "Homologación de las Actas de Constancia de Idoneidad Docente según la Guía de Proyectos Educativos."
+        ],
+        kpi: "Catálogo de 5 especialidades y matriz obligatoria publicada en Boletín Oficial."
+      },
+      3: {
+        number: "03",
+        title: "Formación, Validación y Acreditación de Idoneidad",
+        timeline: "Meses 7 a 10",
+        status: "Programada",
+        statusBadge: "green",
+        objective: "Puesta en marcha de los nuevos programas curriculares por competencias, homologación de centros formativos y habilitación del Registro Único Digital de Agentes.",
+        milestones: [
+          "Suscripción de convenios marco de certificación con universidades públicas y privadas de Córdoba.",
+          "Homologación de centros de capacitación privados con cobro de tasa reglamentaria (Art. 30 Ley 9.236).",
+          "Lanzamiento de las materias transversales: DEA/Primeros Auxilios, lucha contra incendios y desescalada pacífica.",
+          "Inicio de expedición de credenciales digitales con código QR y leyenda 'Sin autorización para armas'."
+        ],
+        kpi: "Primeros 4.000 agentes recertificados con apto psicofísico y credencial digital activa."
+      },
+      4: {
+        number: "04",
+        title: "Certificación Empresarial y Homologación Tecnológica",
+        timeline: "Meses 11 a 15",
+        status: "Programada",
+        statusBadge: "green",
+        objective: "Auditoría integral de la solvencia operativa de las empresas prestadoras y certificación in situ de sus centros de monitoreo y tecnologías asignadas.",
+        milestones: [
+          "Comprobación de garantías reales constituidas a favor del Ministerio de Seguridad (Art. 18 Ley 9.236).",
+          "Homologación de sistemas de CCTV privados y su capacidad de articulación con videovigilancia pública (Art. 41 Ley 10.954).",
+          "Inspección de vehículos y equipamiento móvil asignado a rondas en predios serranos e industriales.",
+          "Certificación de planes de contingencia hidrológica y de evacuación para boliches y recitales."
+        ],
+        kpi: "100% de las empresas prestadoras categorizadas según su capacidad real de servicio."
+      },
+      5: {
+        number: "05",
+        title: "Fiscalización Activa, Control In Situ y Observatorio",
+        timeline: "Meses 16 a 20",
+        status: "Programada",
+        statusBadge: "green",
+        objective: "Despliegue provincial del cuerpo de inspectores del ICSCESP en operativos diurnos y nocturnos, con soporte del Observatorio Estadístico en tiempo real.",
+        milestones: [
+          "Implementación del sistema móvil de actas digitales de infracción con notificación in situ (Art. 45 Ley 9.236).",
+          "Aplicación del régimen sancionatorio y cobro del 30% previo en Bancor para la admisibilidad de recursos recursivos.",
+          "Presentación del 1º Informe Anual del Observatorio de Seguridad Privada ante el CoPEC y el Ministerio.",
+          "Monitoreo estadístico georreferenciado de incidentes en predios comerciales, recitales y barrios cerrados."
+        ],
+        kpi: "Más de 1.200 auditorías in situ ejecutadas y 0% de agentes no acreditados en puestos críticos."
+      },
+      6: {
+        number: "06",
+        title: "Consolidación e Integración al Sistema de Seguridad Pública",
+        timeline: "Meses 21 a 24",
+        status: "Programada",
+        statusBadge: "green",
+        objective: "Interconexión operacional plena del subsistema privado con la Policía de Córdoba, Guardias Locales (GLP) y el Sistema de Despacho 911 en toda la provincia.",
+        milestones: [
+          "Protocolo de enlace de alarmas y videovigilancia privada en tiempo real con las Direcciones Generales de Policía.",
+          "Capacitación conjunta entre supervisores privados y oficiales jefes de Seguridad Capital e Interior.",
+          "Evaluación bianual de los planes de estudio y actualización continua de las matrices de riesgo.",
+          "Consolidación de Córdoba como el modelo de referencia nacional en profesionalización de seguridad privada."
+        ],
+        kpi: "Subsistema completamente interoperable y profesionalizado en los 26 departamentos provinciales."
+      }
+    };
+
+    function selectRoadmapStage(stageNumber, shouldSave = true) {
+      appPersistentState.selectedRoadmapStage = stageNumber;
+
+      // Update button styles
+      for (let i = 1; i <= 6; i++) {
+        const btn = document.getElementById(`stage-btn-${i}`);
+        if (!btn) continue;
+        if (i === stageNumber) {
+          btn.setAttribute('aria-selected', 'true');
+          btn.className = 'tab-btn p-2.5 text-left rounded border border-[#14213d] bg-[#14213d] text-white';
+          const sub = btn.querySelector('span:nth-child(3)');
+          if (sub) sub.className = 'block text-[10px] opacity-80 mt-0.5';
+        } else {
+          btn.setAttribute('aria-selected', 'false');
+          btn.className = 'tab-btn p-2.5 text-left rounded border border-[#d9cfb8] bg-[#fffdf8] text-[#1c1f26] hover:bg-[#ece5d4]';
+          const sub = btn.querySelector('span:nth-child(3)');
+          if (sub) sub.className = 'block text-[10px] text-[#4f5360] mt-0.5';
+        }
+      }
+
+      const data = roadmapStagesData[stageNumber];
+      const container = document.getElementById('roadmap-detail-container');
+      if (container && data) {
+        let milesHtml = '';
+        data.milestones.forEach(m => {
+          milesHtml += `
+            <li class="flex items-start gap-2">
+              <i data-lucide="chevron-right" class="w-4 h-4 text-[#b08d57] shrink-0 mt-0.5"></i>
+              <span>${m}</span>
+            </li>
+          `;
+        });
+
+        container.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-[#d9cfb8] pb-3">
+            <div>
+              <span class="text-[10px] font-mono-code text-[#b08d57] font-semibold uppercase tracking-wider">Cronograma Estratégico • Etapa ${data.number}</span>
+              <h4 class="text-xl font-serif-headline text-[#14213d] font-bold mt-0.5">${data.title}</h4>
+              <p class="text-xs text-[#4f5360]">Plazo de ejecución estipulado: <strong>${data.timeline}</strong></p>
+            </div>
+            <div class="text-right">
+              <span class="brass-badge ${data.statusBadge}">${data.status}</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start pt-2">
+            <div class="md:col-span-5 bg-[#fffdf8] p-4 rounded border border-[#d9cfb8] space-y-3">
+              <div>
+                <span class="text-[10px] font-mono-code text-[#b08d57] uppercase font-bold block mb-1">Propósito Estratégico:</span>
+                <p class="text-xs text-[#1c1f26] leading-relaxed">
+                  ${data.objective}
+                </p>
+              </div>
+              <div class="pt-3 border-t border-[#d9cfb8]">
+                <span class="text-[10px] font-mono-code text-[#14213d] uppercase font-bold block mb-1">Meta de Desempeño (KPI Clave):</span>
+                <p class="text-xs text-[#2d5a4a] font-semibold font-mono-code">
+                  ${data.kpi}
+                </p>
+              </div>
+            </div>
+
+            <div class="md:col-span-7">
+              <span class="text-[10px] font-mono-code text-[#14213d] uppercase font-bold block mb-2">Hitos y Entregables Formales:</span>
+              <ul class="text-xs space-y-2 text-[#1c1f26]">
+                ${milesHtml}
+              </ul>
+            </div>
+          </div>
+        `;
+
+        if (window.lucide && typeof window.lucide.createIcons === 'function') {
+          window.lucide.createIcons();
+        }
+      }
+
+      if (shouldSave) savePersistentState();
+    }
+  </script>
+</body>
+</html>
